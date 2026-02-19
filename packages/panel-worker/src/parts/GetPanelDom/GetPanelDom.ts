@@ -1,7 +1,8 @@
-import { VirtualDomElements, VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker';
+import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { PanelState } from '../PanelState/PanelState.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getPanelTabsVirtualDom } from '../GetPanelTabsVirtualDom/GetPanelTabsVirtualDom.js'
-import { PanelState } from '../PanelState/PanelState.ts'
 
 const getActionsDom = (newState: PanelState) => {
   const actions = newState.actionsUid || -1
