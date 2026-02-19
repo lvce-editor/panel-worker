@@ -17,14 +17,6 @@ interface PanelDimensions {
   readonly y: number
 }
 
-interface LoadContentState extends PanelState, PanelDimensions {
-  readonly actionsUid: number
-  readonly badgeCounts: Readonly<Record<string, number>>
-  readonly childUid: number
-  readonly currentViewletId?: ViewletId
-  readonly views: readonly ViewletId[]
-}
-
 type ViewletCommand = readonly [string, ...(readonly unknown[])]
 
 interface ViewletManagerOptions extends PanelDimensions {
@@ -80,7 +72,7 @@ export const loadContent = (state: PanelState, savedState: SavedPanelState | und
   return openViewlet(loaded, savedViewletId)
 }
 
-export const setBadgeCount = (state: LoadContentState, id: string, count: number): LoadContentState => {
+export const setBadgeCount = (state: PanelState, id: string, count: number): PanelState => {
   const { badgeCounts } = state
   return {
     ...state,
@@ -116,14 +108,14 @@ const getContentDimensions = (dimensions: PanelState): PanelDimensions => {
 //   ]
 // }
 
-export const dispose = (state: LoadContentState): LoadContentState => {
+export const dispose = (state: PanelState): PanelState => {
   return {
     ...state,
     disposed: true,
   }
 }
 
-export const openViewlet = async (state: PanelState, id: ViewletId, focus = false): Promise<LoadContentState> => {
+export const openViewlet = async (state: PanelState, id: ViewletId, focus = false): Promise<PanelState> => {
   const childDimensions = getContentDimensions(state)
 
   const { uid } = state
@@ -178,22 +170,22 @@ export const openViewlet = async (state: PanelState, id: ViewletId, focus = fals
   return { ...state, actionsUid, childUid, currentViewletId: id }
 }
 
-export const hidePanel = async (state: LoadContentState): Promise<LoadContentState> => {
+export const hidePanel = async (state: PanelState): Promise<PanelState> => {
   await Command.execute('Layout.hidePanel')
   return state
 }
 
-export const handleClickClose = async (state: LoadContentState): Promise<LoadContentState> => {
+export const handleClickClose = async (state: PanelState): Promise<PanelState> => {
   await Command.execute('Layout.hidePanel')
   return state
 }
 
-export const handleClickMaximize = async (state: LoadContentState): Promise<LoadContentState> => {
+export const handleClickMaximize = async (state: PanelState): Promise<PanelState> => {
   // TODO
   return state
 }
 
-export const selectIndex = async (state: LoadContentState, index: number): Promise<LoadContentState> => {
+export const selectIndex = async (state: PanelState, index: number): Promise<PanelState> => {
   await openViewlet(state, state.views[index])
   return {
     ...state,
@@ -201,11 +193,11 @@ export const selectIndex = async (state: LoadContentState, index: number): Promi
   }
 }
 
-export const selectRaw = async (state: LoadContentState, rawIndex: string): Promise<LoadContentState> => {
+export const selectRaw = async (state: PanelState, rawIndex: string): Promise<PanelState> => {
   return selectIndex(state, Number.parseInt(rawIndex, 10))
 }
 
-export const selectView = async (state: LoadContentState, name: ViewletId): Promise<LoadContentState> => {
+export const selectView = async (state: PanelState, name: ViewletId): Promise<PanelState> => {
   const index = state.views.indexOf(name)
   if (index === -1) {
     return state
@@ -213,7 +205,7 @@ export const selectView = async (state: LoadContentState, name: ViewletId): Prom
   return selectIndex(state, index)
 }
 
-export const toggleView = async (state: LoadContentState, name: ViewletId): Promise<LoadContentState> => {
+export const toggleView = async (state: PanelState, name: ViewletId): Promise<PanelState> => {
   const index = state.views.indexOf(name)
   if (index === -1) {
     return state
@@ -225,7 +217,7 @@ export const toggleView = async (state: LoadContentState, name: ViewletId): Prom
   return selectIndex(state, index)
 }
 
-export const handleFilterInput = async (state: LoadContentState, value: string): Promise<LoadContentState> => {
+export const handleFilterInput = async (state: PanelState, value: string): Promise<PanelState> => {
   Assert.object(state)
   Assert.string(value)
   const { currentViewletId } = state
