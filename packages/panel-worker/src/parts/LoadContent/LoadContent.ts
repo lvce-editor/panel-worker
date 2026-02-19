@@ -1,7 +1,8 @@
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { PanelState } from '../PanelState/PanelState.ts'
 import * as Assert from '../Assert/Assert.ts'
+import { createViewlet } from '../CreateViewlet/CreateViewlet.ts'
 import * as GetPanelViews from '../GetPanelViews/GetPanelViews.ts'
-import * as Id from '../Id/Id.ts'
 import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.ts'
 
 type ViewletId = string
@@ -15,43 +16,6 @@ interface PanelDimensions {
   readonly width: number
   readonly x: number
   readonly y: number
-}
-
-type ViewletCommand = readonly [string, ...(readonly unknown[])]
-
-interface ViewletManagerOptions extends PanelDimensions {
-  readonly append: boolean
-  readonly args: readonly unknown[]
-  readonly focus: boolean
-  readonly getModule: unknown
-  readonly id: ViewletId
-  readonly parentUid: number
-  readonly setBounds: boolean
-  readonly shouldRenderEvents: boolean
-  readonly show: boolean
-  readonly type: number
-  readonly uid: number
-  readonly uri: string
-}
-
-declare const ViewletManager: {
-  readonly load: (
-    options: ViewletManagerOptions,
-    preserveScrollPosition: boolean,
-    preserveSelection: boolean,
-  ) => Promise<ViewletCommand[] | undefined>
-}
-
-declare const ViewletModule: {
-  readonly load: unknown
-}
-
-declare const RendererProcess: {
-  readonly invoke: (method: string, commands: readonly ViewletCommand[]) => Promise<void>
-}
-
-declare const Command: {
-  readonly execute: (command: string, ...args: readonly unknown[]) => Promise<void>
 }
 
 const getSavedViewletId = (savedState: SavedPanelState | undefined): ViewletId => {
@@ -115,68 +79,23 @@ export const dispose = (state: PanelState): PanelState => {
   }
 }
 
-export const openViewlet = async (state: PanelState, id: ViewletId, focus = false): Promise<PanelState> => {
+export const openViewlet = async (state: PanelState, id: string, focus = false): Promise<PanelState> => {
   const childDimensions = getContentDimensions(state)
-
-  const { uid } = state
-
-  const childUid = Id.create()
-
-  const commands = await ViewletManager.load(
-    {
-      append: false,
-      args: [],
-      focus,
-      getModule: ViewletModule.load,
-      height: childDimensions.height,
-      id,
-      parentUid: uid,
-      setBounds: false,
-      shouldRenderEvents: false,
-      show: false,
-      type: 0,
-      uid: childUid,
-      // @ts-ignore
-      uri: '',
-      width: childDimensions.width,
-      x: childDimensions.x,
-      y: childDimensions.y,
-    },
-    false,
-    true,
-  )
-  let actionsDom: readonly unknown[] = []
-  let actionsUid = -1
-  if (commands) {
-    const actionsDomIndex = commands.findIndex((command) => command[2] === 'setActionsDom')
-    if (actionsDomIndex !== -1) {
-      const actionDomEntry = commands[actionsDomIndex]?.[3]
-      if (Array.isArray(actionDomEntry)) {
-        actionsDom = actionDomEntry
-      }
-      commands.splice(actionsDomIndex, 1)
-    }
-    const eventsIndex = commands.findIndex((command) => command[0] === 'Viewlet.registerEventListeners')
-    const events = eventsIndex === -1 ? [] : commands[eventsIndex]?.[2]
-    actionsUid = Id.create()
-    commands.push(
-      ['Viewlet.createFunctionalRoot', id, actionsUid, true],
-      ['Viewlet.registerEventListeners', actionsUid, events],
-      ['Viewlet.setDom2', actionsUid, actionsDom],
-      ['Viewlet.setUid', actionsUid, childUid],
-    )
-    await RendererProcess.invoke('Viewlet.sendMultiple', commands)
-  }
+  const childUid = Math.random()
+  const tabId = 1234
+  // TODO get the actions uid somehow
+  const actionsUid = Math.random()
+  await createViewlet(id, childUid, tabId, childDimensions, '')
   return { ...state, actionsUid, childUid, currentViewletId: id }
 }
 
 export const hidePanel = async (state: PanelState): Promise<PanelState> => {
-  await Command.execute('Layout.hidePanel')
+  await RendererWorker.invoke('Layout.hidePanel')
   return state
 }
 
 export const handleClickClose = async (state: PanelState): Promise<PanelState> => {
-  await Command.execute('Layout.hidePanel')
+  await RendererWorker.invoke('Layout.hidePanel')
   return state
 }
 
@@ -222,6 +141,6 @@ export const handleFilterInput = async (state: PanelState, value: string): Promi
   Assert.string(value)
   const { currentViewletId } = state
   const fullCommand = `${currentViewletId}.handleFilterInput`
-  await Command.execute(fullCommand, value)
+  await RendererWorker.invoke(fullCommand, value)
   return state
 }
