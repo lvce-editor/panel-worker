@@ -3,8 +3,36 @@ import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { saveState } from '../src/parts/SaveState/SaveState.ts'
 
-const createState = (overrides: Partial<PanelState> = {}): PanelState => {
-  return {
+test('saveState should return persisted state with currentViewletId', () => {
+  const state: PanelState = {
+    ...createDefaultState(),
+    actionsUid: 11,
+    assetDir: '/asset-dir',
+    badgeCounts: { PROBLEMS: 3 },
+    childUid: 12,
+    currentViewletId: 'Output',
+    errorCount: 1,
+    height: 200,
+    initial: false,
+    platform: 2,
+    selectedIndex: 0,
+    uid: 13,
+    views: ['PROBLEMS', 'OUTPUT'],
+    warningCount: 2,
+    width: 300,
+    x: 10,
+    y: 20,
+  }
+
+  const result = saveState(state)
+
+  expect(result).toEqual({
+    currentViewletId: 'Output',
+  })
+})
+
+test('saveState should not include unrelated state properties', () => {
+  const state: PanelState = {
     ...createDefaultState(),
     actionsUid: 11,
     assetDir: '/asset-dir',
@@ -22,24 +50,7 @@ const createState = (overrides: Partial<PanelState> = {}): PanelState => {
     width: 300,
     x: 10,
     y: 20,
-    ...overrides,
   }
-}
-
-test('saveState should return persisted state with currentViewletId', () => {
-  const state = createState({
-    currentViewletId: 'Output',
-  })
-
-  const result = saveState(state)
-
-  expect(result).toEqual({
-    currentViewletId: 'Output',
-  })
-})
-
-test('saveState should not include unrelated state properties', () => {
-  const state = createState()
 
   const result = saveState(state)
 
@@ -51,9 +62,25 @@ test('saveState should not include unrelated state properties', () => {
 })
 
 test('saveState should preserve empty currentViewletId value', () => {
-  const state = createState({
+  const state: PanelState = {
+    ...createDefaultState(),
+    actionsUid: 11,
+    assetDir: '/asset-dir',
+    badgeCounts: { PROBLEMS: 3 },
+    childUid: 12,
     currentViewletId: '',
-  })
+    errorCount: 1,
+    height: 200,
+    initial: false,
+    platform: 2,
+    selectedIndex: 0,
+    uid: 13,
+    views: ['PROBLEMS', 'OUTPUT'],
+    warningCount: 2,
+    width: 300,
+    x: 10,
+    y: 20,
+  }
 
   const result = saveState(state)
 
