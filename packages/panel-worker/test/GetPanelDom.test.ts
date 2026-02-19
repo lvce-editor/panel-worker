@@ -93,7 +93,7 @@ test('getPanelDom should render panel with tabs and fallback actions div when ac
       childCount: 1,
       className: 'IconButton',
       onClick: DomEventListenerFunctions.HandleClickMaximize,
-      titleM: 'Maximize',
+      title: 'Maximize',
       type: VirtualDomElements.Button,
     },
     {
@@ -106,7 +106,7 @@ test('getPanelDom should render panel with tabs and fallback actions div when ac
       childCount: 1,
       className: 'IconButton',
       onClick: DomEventListenerFunctions.HandleClickClose,
-      titleM: 'Close',
+      title: 'Close',
       type: VirtualDomElements.Button,
     },
     {
