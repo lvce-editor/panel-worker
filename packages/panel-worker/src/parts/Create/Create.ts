@@ -7,6 +7,7 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
     assetDir,
     badgeCounts: {},
     childUid: 0,
+    currentViewletId: '',
     errorCount: 0,
     initial: true,
     platform,

@@ -3,6 +3,7 @@ export interface PanelState {
   readonly assetDir: string
   readonly badgeCounts: any
   readonly childUid: number
+  readonly currentViewletId: string
   readonly disposed?: boolean
   readonly errorCount: number
   readonly initial: boolean
