@@ -17,6 +17,7 @@ export const getPanelHeaderDom = (newState: PanelState): readonly VirtualDomNode
     {
       childCount: newState.views.length,
       className: ClassNames.PanelTabs,
+      role: 'tablist',
       type: VirtualDomElements.Div,
     },
     ...tabsDom,
