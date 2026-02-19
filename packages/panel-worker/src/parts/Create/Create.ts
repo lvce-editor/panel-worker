@@ -14,6 +14,10 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
     uid,
     views: [],
     warningCount: 0,
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
   }
   set(uid, state, state)
 }

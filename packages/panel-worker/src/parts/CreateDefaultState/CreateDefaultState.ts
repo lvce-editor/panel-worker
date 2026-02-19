@@ -13,5 +13,9 @@ export const createDefaultState = (): PanelState => {
     uid: 0,
     views: [],
     warningCount: 0,
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
   }
 }
