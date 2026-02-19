@@ -2,11 +2,13 @@ import { expect, test } from '@jest/globals'
 import { AriaRoles, text, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
+import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getPanelDom } from '../src/parts/GetPanelDom/GetPanelDom.ts'
 
 const createState = (overrides: Partial<PanelState> = {}): PanelState => {
   return {
+    ...createDefaultState(),
     actionsUid: 0,
     assetDir: '',
     badgeCounts: {},
