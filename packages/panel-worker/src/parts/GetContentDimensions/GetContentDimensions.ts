@@ -1,5 +1,5 @@
-import type { PanelState } from '../PanelState/PanelState.ts'
 import type { PanelDimensions } from '../PanelDimensions/PanelDimensions.ts'
+import type { PanelState } from '../PanelState/PanelState.ts'
 
 export const getContentDimensions = (dimensions: PanelState): PanelDimensions => {
   return {
