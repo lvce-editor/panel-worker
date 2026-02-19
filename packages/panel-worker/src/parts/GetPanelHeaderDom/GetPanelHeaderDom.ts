@@ -1,5 +1,5 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
-import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { AriaRoles, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { PanelState } from '../PanelState/PanelState.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import { getActionsDom } from '../GetActionsDom/GetActionsDom.ts'
@@ -17,7 +17,7 @@ export const getPanelHeaderDom = (newState: PanelState): readonly VirtualDomNode
     {
       childCount: newState.views.length,
       className: ClassNames.PanelTabs,
-      role: 'tablist',
+      role: AriaRoles.TabList,
       type: VirtualDomElements.Div,
     },
     ...tabsDom,
