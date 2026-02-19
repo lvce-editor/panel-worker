@@ -1,6 +1,6 @@
 import { RendererWorker } from '@lvce-editor/rpc-registry'
-import type { PanelState } from '../../PanelState/PanelState.ts'
-import * as Assert from '../../Assert/Assert.ts'
+import type { PanelState } from '../PanelState/PanelState.ts'
+import * as Assert from '../Assert/Assert.ts'
 
 export const handleFilterInput = async (state: PanelState, value: string): Promise<PanelState> => {
   Assert.object(state)
