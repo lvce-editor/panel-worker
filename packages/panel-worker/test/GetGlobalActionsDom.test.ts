@@ -1,41 +1,43 @@
-import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+import { expect, test } from '@jest/globals'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-import * as ClassNames from '../ClassNames/ClassNames.ts'
-import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import { getGlobalActionsDom } from '../src/parts/GetGlobalActionsDom/GetGlobalActionsDom.ts'
 
-export const getGlobalActionsDom = (): readonly VirtualDomNode[] => {
-  return [
+test('getGlobalActionsDom should render maximize and close toolbar actions', () => {
+  const dom = getGlobalActionsDom()
+
+  expect(dom).toEqual([
     {
       childCount: 2,
-      className: ClassNames.PanelToolBar,
+      className: 'PanelToolBar',
       role: 'toolbar',
       type: VirtualDomElements.Div,
     },
     {
       ariaLabel: 'Maximize',
       childCount: 1,
-      className: ClassNames.IconButton,
+      className: 'IconButton',
       onClick: DomEventListenerFunctions.HandleClickMaximize,
       title: 'Maximize',
       type: VirtualDomElements.Button,
     },
     {
       childCount: 0,
-      className: `${ClassNames.MaskIcon} ${ClassNames.MaskIconChevronUp}`,
+      className: 'MaskIcon MaskIconChevronUp',
       type: VirtualDomElements.Div,
     },
     {
       ariaLabel: 'Close',
       childCount: 1,
-      className: ClassNames.IconButton,
+      className: 'IconButton',
       onClick: DomEventListenerFunctions.HandleClickClose,
       title: 'Close',
       type: VirtualDomElements.Button,
     },
     {
       childCount: 0,
-      className: `${ClassNames.MaskIcon} ${ClassNames.MaskIconClose}`,
+      className: 'MaskIcon MaskIconClose',
       type: VirtualDomElements.Div,
     },
-  ]
-}
+  ])
+})

@@ -1,0 +1,66 @@
+import * as I18nString from '@lvcei'
+import * as UiStrings from '../UiStrings/UiStrings.ts'
+
+export const account = (): string => {
+  return I18nString.i18nString(UiStrings.Account)
+}
+
+export const explorer = (): string => {
+  return I18nString.i18nString(UiStrings.Explorer)
+}
+
+export const search = (): string => {
+  return I18nString.i18nString(UiStrings.Search)
+}
+
+export const sourceControl = (): string => {
+  return I18nString.i18nString(UiStrings.SourceControl)
+}
+
+export const runAndDebug = (): string => {
+  return I18nString.i18nString(UiStrings.RunAndDebug)
+}
+
+export const extensions = (): string => {
+  return I18nString.i18nString(UiStrings.Extensions)
+}
+
+export const settings = (): string => {
+  return I18nString.i18nString(UiStrings.Settings)
+}
+
+export const additionalViews = (): string => {
+  return I18nString.i18nString(UiStrings.AdditionalViews)
+}
+
+export const activityBar = (): string => {
+  return I18nString.i18nString(UiStrings.ActivityBar)
+}
+
+export const moveSideBarRight = (): string => {
+  return I18nString.i18nString(UiStrings.MoveSideBarRight)
+}
+
+export const moveSideBarLeft = (): string => {
+  return I18nString.i18nString(UiStrings.MoveSideBarLeft)
+}
+
+export const hideActivityBar = (): string => {
+  return I18nString.i18nString(UiStrings.HideActivityBar)
+}
+
+export const checkForUpdates = (): string => {
+  return I18nString.i18nString(UiStrings.CheckForUpdates)
+}
+
+export const commandPalette = (): string => {
+  return I18nString.i18nString(UiStrings.CommandPalette)
+}
+
+export const keyboardShortcuts = (): string => {
+  return I18nString.i18nString(UiStrings.KeyboardShortcuts)
+}
+
+export const colorTheme = (): string => {
+  return I18nString.i18nString(UiStrings.ColorTheme)
+}
