@@ -1,39 +1,41 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import * as PanelStrings from '../PanelStrings/PanelStrings.ts'
 
 export const getGlobalActionsDom = (): readonly VirtualDomNode[] => {
   return [
     {
       childCount: 2,
-      className: 'PanelToolBar',
+      className: ClassNames.PanelToolBar,
       role: 'toolbar',
       type: VirtualDomElements.Div,
     },
     {
-      ariaLabel: 'Maximize',
+      ariaLabel: PanelStrings.maximize(),
       childCount: 1,
-      className: 'IconButton',
+      className: ClassNames.IconButton,
       onClick: DomEventListenerFunctions.HandleClickMaximize,
-      titleM: 'Maximize',
+      title: PanelStrings.maximize(),
       type: VirtualDomElements.Button,
     },
     {
       childCount: 0,
-      className: 'MaskIcon MaskIconChevronUp',
+      className: `${ClassNames.MaskIcon} ${ClassNames.MaskIconChevronUp}`,
       type: VirtualDomElements.Div,
     },
     {
-      ariaLabel: 'Close',
+      ariaLabel: PanelStrings.close(),
       childCount: 1,
-      className: 'IconButton',
+      className: ClassNames.IconButton,
       onClick: DomEventListenerFunctions.HandleClickClose,
-      titleM: 'Close',
+      title: PanelStrings.close(),
       type: VirtualDomElements.Button,
     },
     {
       childCount: 0,
-      className: 'MaskIcon MaskIconClose',
+      className: `${ClassNames.MaskIcon} ${ClassNames.MaskIconClose}`,
       type: VirtualDomElements.Div,
     },
   ]
