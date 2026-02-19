@@ -1,5 +1,5 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
-import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { AriaRoles, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { PanelState } from '../PanelState/PanelState.ts'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 
@@ -10,7 +10,7 @@ export const getActionsDom = (newState: PanelState): readonly VirtualDomNode[] =
       {
         childCount: 0,
         className: ClassNames.Actions,
-        role: 'toolbar',
+        role: AriaRoles.ToolBar,
         type: VirtualDomElements.Div,
       },
     ]
