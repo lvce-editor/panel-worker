@@ -1,8 +1,9 @@
 import { AriaRoles, text, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
-const createPanelTab = (tab, badgeCount, isSelected, index): readonly any[] => {
+const createPanelTab = (tab, badgeCount, isSelected, index): readonly VirtualDomNode[] => {
   const label = tab
   let className = ClassNames.PanelTab
   if (isSelected) {
@@ -35,7 +36,7 @@ const createPanelTab = (tab, badgeCount, isSelected, index): readonly any[] => {
   return dom
 }
 
-export const getPanelTabsVirtualDom = (tabs, selectedIndex, badgeCounts): readonly any[] => {
+export const getPanelTabsVirtualDom = (tabs, selectedIndex, badgeCounts): readonly VirtualDomNode[] => {
   const dom = []
   for (let i = 0; i < tabs.length; i++) {
     const isSelected = i === selectedIndex
