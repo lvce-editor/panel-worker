@@ -69,7 +69,7 @@ const getSavedViewletId = (savedState: SavedPanelState | undefined): ViewletId =
   return ViewletModuleId.Problems
 }
 
-export const loadContent = (state: LoadContentState, savedState: SavedPanelState | undefined): Promise<LoadContentState> => {
+export const loadContent = (state: PanelState, savedState: SavedPanelState | undefined): Promise<PanelState> => {
   const savedViewletId = getSavedViewletId(savedState)
   const views = GetPanelViews.getPanelViews()
   const loaded = {
@@ -96,7 +96,7 @@ export const setBadgeCount = (state: LoadContentState, id: string, count: number
 //   return commands
 // }
 
-const getContentDimensions = (dimensions: PanelDimensions): PanelDimensions => {
+const getContentDimensions = (dimensions: PanelState): PanelDimensions => {
   return {
     height: dimensions.height - 35,
     width: dimensions.width,
@@ -123,7 +123,7 @@ export const dispose = (state: LoadContentState): LoadContentState => {
   }
 }
 
-export const openViewlet = async (state: LoadContentState, id: ViewletId, focus = false): Promise<LoadContentState> => {
+export const openViewlet = async (state: PanelState, id: ViewletId, focus = false): Promise<LoadContentState> => {
   const childDimensions = getContentDimensions(state)
 
   const { uid } = state
