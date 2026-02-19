@@ -1,3 +1,5 @@
+import type { Tab } from '../Tab/Tab.ts'
+
 export interface PanelState {
   readonly actionsUid: number
   readonly assetDir: string
@@ -9,6 +11,7 @@ export interface PanelState {
   readonly initial: boolean
   readonly platform: number
   readonly selectedIndex: number
+  readonly tabs: readonly Tab[]
   readonly uid: number
   readonly views: any
   readonly warningCount: number
