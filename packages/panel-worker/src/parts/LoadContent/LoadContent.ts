@@ -72,13 +72,6 @@ const getContentDimensions = (dimensions: PanelState): PanelDimensions => {
 //   ]
 // }
 
-export const dispose = (state: PanelState): PanelState => {
-  return {
-    ...state,
-    disposed: true,
-  }
-}
-
 export const openViewlet = async (state: PanelState, id: string, focus = false): Promise<PanelState> => {
   const childDimensions = getContentDimensions(state)
   const childUid = Math.random()
@@ -87,11 +80,6 @@ export const openViewlet = async (state: PanelState, id: string, focus = false):
   const actionsUid = Math.random()
   await createViewlet(id, childUid, tabId, childDimensions, '')
   return { ...state, actionsUid, childUid, currentViewletId: id }
-}
-
-export const hidePanel = async (state: PanelState): Promise<PanelState> => {
-  await RendererWorker.invoke('Layout.hidePanel')
-  return state
 }
 
 export const handleClickClose = async (state: PanelState): Promise<PanelState> => {
@@ -114,14 +102,6 @@ export const selectIndex = async (state: PanelState, index: number): Promise<Pan
 
 export const selectRaw = async (state: PanelState, rawIndex: string): Promise<PanelState> => {
   return selectIndex(state, Number.parseInt(rawIndex, 10))
-}
-
-export const selectView = async (state: PanelState, name: ViewletId): Promise<PanelState> => {
-  const index = state.views.indexOf(name)
-  if (index === -1) {
-    return state
-  }
-  return selectIndex(state, index)
 }
 
 export const toggleView = async (state: PanelState, name: ViewletId): Promise<PanelState> => {
