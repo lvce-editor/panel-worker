@@ -9,6 +9,8 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
     platform,
     uid,
     warningCount: 0,
+    actionsUid: 0,
+    childUid: 0,
   }
   set(uid, state, state)
 }

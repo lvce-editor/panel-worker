@@ -2,7 +2,9 @@ import type { PanelState } from '../PanelState/PanelState.ts'
 
 export const createDefaultState = (): PanelState => {
   return {
+    actionsUid: 0,
     assetDir: '',
+    childUid: 0,
     errorCount: 0,
     initial: true,
     platform: 0,
