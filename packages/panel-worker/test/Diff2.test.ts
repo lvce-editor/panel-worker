@@ -30,8 +30,9 @@ const createState = (overrides: Partial<PanelState> = {}): PanelState => {
 
 test('diff2 should return empty diff when relevant state is unchanged', () => {
   const uid = 1001
-  const oldState = createState({ assetDir: '/same-dir', uid })
-  const newState = createState({ assetDir: '/same-dir', uid })
+  const views = ['PROBLEMS']
+  const oldState = createState({ assetDir: '/same-dir', uid, views })
+  const newState = createState({ assetDir: '/same-dir', uid, views })
   PanelStates.set(uid, newState, oldState)
 
   const result = Diff2.diff2(uid)
