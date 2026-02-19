@@ -12,6 +12,7 @@ export const commandMap = {
   'Panel.create': Panel.create,
   'Panel.diff2': diff2,
   'Panel.getCommandIds': getCommandIds,
+  'Panel.handleBlur': wrapCommand(LoadContent.handleBlur),
   'Panel.handleClickClose': wrapCommand(LoadContent.handleClickClose),
   'Panel.handleClickMaximize': wrapCommand(LoadContent.handleClickMaximize),
   'Panel.handleFilterInput': wrapCommand(LoadContent.handleFilterInput),
