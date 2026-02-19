@@ -81,7 +81,7 @@ export const getPanelDom = (newState: PanelState): readonly VirtualDomNode[] => 
     },
     ...tabsDom,
     ...getActionsDom(newState),
-    ...getGlobalActionsDom(newState),
+    ...getGlobalActionsDom(),
     {
       type: VirtualDomElements.Reference,
       uid: childUid,
