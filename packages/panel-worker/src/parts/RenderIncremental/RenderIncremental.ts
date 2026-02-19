@@ -4,8 +4,8 @@ import type { PanelState } from '../PanelState/PanelState.ts'
 import { renderItems } from '../RenderItems/RenderItems.ts'
 
 export const renderIncremental = (oldState: PanelState, newState: PanelState): any => {
-  const oldDom = renderItems(oldState, oldState)[2]
-  const newDom = renderItems(newState, newState)[2]
+  const oldDom = renderItems(oldState, oldState)
+  const newDom = renderItems(newState, newState)
   const patches = diffTree(oldDom, newDom)
   return [ViewletCommand.SetPatches, newState.uid, patches]
 }
