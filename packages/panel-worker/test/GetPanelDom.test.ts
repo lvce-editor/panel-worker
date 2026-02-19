@@ -40,6 +40,7 @@ test('getPanelDom should render panel with tabs and fallback actions div when ac
     {
       childCount: 2,
       className: 'PanelTabs',
+      role: 'tablist',
       type: VirtualDomElements.Div,
     },
     {
