@@ -8,16 +8,16 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
     badgeCounts: {},
     childUid: 0,
     errorCount: 0,
+    height: 0,
     initial: true,
     platform,
     selectedIndex: -1,
     uid,
     views: [],
     warningCount: 0,
+    width: 0,
     x: 0,
     y: 0,
-    width: 0,
-    height: 0,
   }
   set(uid, state, state)
 }
