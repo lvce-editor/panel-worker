@@ -12,6 +12,7 @@ export const createDefaultState = (): PanelState => {
     initial: true,
     platform: 0,
     selectedIndex: -1,
+    tabs: [],
     uid: 0,
     views: [],
     warningCount: 0,

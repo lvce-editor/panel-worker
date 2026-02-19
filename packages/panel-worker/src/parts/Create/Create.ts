@@ -13,6 +13,7 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
     initial: true,
     platform,
     selectedIndex: -1,
+    tabs: [],
     uid,
     views: [],
     warningCount: 0,
