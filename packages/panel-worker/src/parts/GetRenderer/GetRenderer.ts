@@ -6,10 +6,10 @@ import * as RenderItems from '../RenderItems/RenderItems.ts'
 
 export const getRenderer = (diffType: number): Renderer => {
   switch (diffType) {
-    case DiffType.RenderIncremental:
-      return renderIncremental
     case DiffType.RenderChildUid:
       return renderChildUid
+    case DiffType.RenderIncremental:
+      return renderIncremental
     case DiffType.RenderItems:
       return RenderItems.renderItems
     default:
