@@ -1,9 +1,5 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
-<<<<<<< HEAD
-import { mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
-=======
-import { AriaRoles, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
->>>>>>> origin/main
+import { AriaRoles, mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as PanelStrings from '../PanelStrings/PanelStrings.ts'
