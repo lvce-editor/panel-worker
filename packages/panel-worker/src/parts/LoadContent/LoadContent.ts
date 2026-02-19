@@ -25,7 +25,7 @@ interface LoadContentState extends PanelState, PanelDimensions {
   readonly views: readonly ViewletId[]
 }
 
-type ViewletCommand = readonly [string, ...readonly unknown[]]
+type ViewletCommand = readonly [string, ...(readonly unknown[])]
 
 interface ViewletManagerOptions extends PanelDimensions {
   readonly append: boolean
