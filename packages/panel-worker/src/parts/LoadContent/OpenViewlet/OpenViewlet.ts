@@ -5,8 +5,16 @@ import * as GetContentDimensions from '../GetContentDimensions/GetContentDimensi
 export const openViewlet = async (state: PanelState, id: string, focus = false): Promise<PanelState> => {
   const childDimensions = GetContentDimensions.getContentDimensions(state)
   const childUid = Math.random()
-  const tabId = 1234
+  const tabId = Math.random()
   const actionsUid = Math.random()
+  const index = state.views.indexOf(id)
   await createViewlet(id, childUid, tabId, childDimensions, '')
-  return { ...state, actionsUid, childUid, currentViewletId: id, initial: false }
+  return {
+    ...state,
+    actionsUid,
+    childUid,
+    currentViewletId: id,
+    initial: false,
+    selectedIndex: index,
+  }
 }
