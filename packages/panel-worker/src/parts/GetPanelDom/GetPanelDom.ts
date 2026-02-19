@@ -3,7 +3,7 @@ import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { PanelState } from '../PanelState/PanelState.ts'
 import { getActionsDom } from '../GetActionsDom/GetActionsDom.ts'
 import { getGlobalActionsDom } from '../GetGlobalActionsDom/GetGlobalActionsDom.ts'
-import { getPanelTabsVirtualDom } from '../GetPanelTabsVirtualDom/GetPanelTabsVirtualDom.js'
+import { getPanelTabsVirtualDom } from '../GetPanelTabsVirtualDom/GetPanelTabsVirtualDom.ts'
 
 export const getPanelDom = (newState: PanelState): readonly VirtualDomNode[] => {
   const { childUid } = newState
