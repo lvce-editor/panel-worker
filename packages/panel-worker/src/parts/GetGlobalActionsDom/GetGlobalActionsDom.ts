@@ -1,5 +1,5 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
-import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+import { mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as PanelStrings from '../PanelStrings/PanelStrings.ts'
@@ -22,7 +22,7 @@ export const getGlobalActionsDom = (): readonly VirtualDomNode[] => {
     },
     {
       childCount: 0,
-      className: `${ClassNames.MaskIcon} ${ClassNames.MaskIconChevronUp}`,
+      className: mergeClassNames(ClassNames.MaskIcon, ClassNames.MaskIconChevronUp),
       type: VirtualDomElements.Div,
     },
     {
@@ -35,7 +35,7 @@ export const getGlobalActionsDom = (): readonly VirtualDomNode[] => {
     },
     {
       childCount: 0,
-      className: `${ClassNames.MaskIcon} ${ClassNames.MaskIconClose}`,
+      className: mergeClassNames(ClassNames.MaskIcon, ClassNames.MaskIconClose),
       type: VirtualDomElements.Div,
     },
   ]
