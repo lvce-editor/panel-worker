@@ -6,12 +6,14 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getPanelDom } from '../src/parts/GetPanelDom/GetPanelDom.ts'
 
-const createState = (overrides: Partial<PanelState> = {}): PanelState => {
-  return {
+test('getPanelDom should render panel with tabs and fallback actions div when actions uid is 0', () => {
+  const state: PanelState = {
     ...createDefaultState(),
     actionsUid: 0,
     assetDir: '',
-    badgeCounts: {},
+    badgeCounts: {
+      PROBLEMS: 3,
+    },
     childUid: 11,
     errorCount: 0,
     initial: false,
@@ -20,17 +22,7 @@ const createState = (overrides: Partial<PanelState> = {}): PanelState => {
     uid: 1,
     views: ['PROBLEMS', 'OUTPUT'],
     warningCount: 0,
-    ...overrides,
   }
-}
-
-test('getPanelDom should render panel with tabs and fallback actions div when actions uid is 0', () => {
-  const state = createState({
-    actionsUid: 0,
-    badgeCounts: {
-      PROBLEMS: 3,
-    },
-  })
 
   const dom = getPanelDom(state)
 
@@ -122,12 +114,20 @@ test('getPanelDom should render panel with tabs and fallback actions div when ac
 })
 
 test('getPanelDom should render actions reference when actions uid is set', () => {
-  const state = createState({
+  const state: PanelState = {
+    ...createDefaultState(),
     actionsUid: 42,
+    assetDir: '',
+    badgeCounts: {},
     childUid: 99,
+    errorCount: 0,
+    initial: false,
+    platform: 0,
     selectedIndex: 0,
+    uid: 1,
     views: ['PROBLEMS'],
-  })
+    warningCount: 0,
+  }
 
   const dom = getPanelDom(state)
 
