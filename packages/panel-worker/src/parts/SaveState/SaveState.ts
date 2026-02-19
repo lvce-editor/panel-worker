@@ -1,8 +1,8 @@
 import type { PanelState } from '../PanelState/PanelState.ts'
-import type { SavedState } from '../SavedState/SavedState.ts'
 
-export const saveState = (state: PanelState): SavedState => {
+export const saveState = (state: PanelState): any => {
+  const { currentViewletId } = state
   return {
-    x: 0,
+    currentViewletId,
   }
 }

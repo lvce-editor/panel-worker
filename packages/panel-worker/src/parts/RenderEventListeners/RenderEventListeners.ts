@@ -1,12 +1,18 @@
-import { EventExpression } from '@lvce-editor/constants'
-import type { DomEventListener } from '../DomEventListener/DomEventListener.ts'
 import * as DomEventListenersFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 
-export const renderEventListeners = (): readonly DomEventListener[] => {
+export const renderEventListeners = (): readonly any[] => {
   return [
     {
-      name: DomEventListenersFunctions.HandleClick,
-      params: ['handleClick', EventExpression.TargetName],
+      name: DomEventListenersFunctions.HandleClickMaximize,
+      params: ['handleClickMaximize'],
+    },
+    {
+      name: DomEventListenersFunctions.HandleClickClose,
+      params: ['handleClickClose'],
+    },
+    {
+      name: DomEventListenersFunctions.HandleClickSelectTab,
+      params: ['selectIndexRaw', 'event.target.dataset.index'],
     },
   ]
 }
