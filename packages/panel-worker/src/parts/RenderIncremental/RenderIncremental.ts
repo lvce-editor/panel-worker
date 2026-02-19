@@ -3,7 +3,7 @@ import { diffTree } from '@lvce-editor/virtual-dom-worker'
 import type { PanelState } from '../PanelState/PanelState.ts'
 import { renderItems } from '../RenderItems/RenderItems.ts'
 
-export const renderIcremental = (oldState: PanelState, newState: PanelState): any => {
+export const renderIncremental = (oldState: PanelState, newState: PanelState): any => {
   const oldDom = renderItems(oldState, oldState)[2]
   const newDom = renderItems(newState, newState)[2]
   const patches = diffTree(oldDom, newDom)
