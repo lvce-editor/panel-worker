@@ -1,4 +1,4 @@
-import * as I18nString from '@lvcei'
+import * as I18nString from '@lvce-editor/i18n'
 import * as UiStrings from '../UiStrings/UiStrings.ts'
 
 export const account = (): string => {
