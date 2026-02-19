@@ -1,6 +1,6 @@
-import type { PanelState } from '../../PanelState/PanelState.ts'
+import type { PanelState } from '../PanelState/PanelState.ts'
 import type { SavedPanelState } from '../SavedPanelState/SavedPanelState.ts'
-import * as GetPanelViews from '../../GetPanelViews/GetPanelViews.ts'
+import * as GetPanelViews from '../GetPanelViews/GetPanelViews.ts'
 import * as GetSavedViewletId from '../GetSavedViewletId/GetSavedViewletId.ts'
 import * as OpenViewlet from '../OpenViewlet/OpenViewlet.ts'
 

@@ -1,5 +1,5 @@
-import type { PanelState } from '../../PanelState/PanelState.ts'
-import { createViewlet } from '../../CreateViewlet/CreateViewlet.ts'
+import type { PanelState } from '../PanelState/PanelState.ts'
+import { createViewlet } from '../CreateViewlet/CreateViewlet.ts'
 import * as GetContentDimensions from '../GetContentDimensions/GetContentDimensions.ts'
 
 export const openViewlet = async (state: PanelState, id: string, focus = false): Promise<PanelState> => {
