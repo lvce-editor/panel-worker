@@ -2,6 +2,7 @@ import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
+import * as PanelStrings from '../PanelStrings/PanelStrings.ts'
 
 export const getGlobalActionsDom = (): readonly VirtualDomNode[] => {
   return [
@@ -12,11 +13,11 @@ export const getGlobalActionsDom = (): readonly VirtualDomNode[] => {
       type: VirtualDomElements.Div,
     },
     {
-      ariaLabel: 'Maximize',
+      ariaLabel: PanelStrings.maximize(),
       childCount: 1,
       className: ClassNames.IconButton,
       onClick: DomEventListenerFunctions.HandleClickMaximize,
-      title: 'Maximize',
+      title: PanelStrings.maximize(),
       type: VirtualDomElements.Button,
     },
     {
@@ -25,11 +26,11 @@ export const getGlobalActionsDom = (): readonly VirtualDomNode[] => {
       type: VirtualDomElements.Div,
     },
     {
-      ariaLabel: 'Close',
+      ariaLabel: PanelStrings.close(),
       childCount: 1,
       className: ClassNames.IconButton,
       onClick: DomEventListenerFunctions.HandleClickClose,
-      title: 'Close',
+      title: PanelStrings.close(),
       type: VirtualDomElements.Button,
     },
     {

@@ -64,3 +64,11 @@ export const keyboardShortcuts = (): string => {
 export const colorTheme = (): string => {
   return I18nString.i18nString(UiStrings.ColorTheme)
 }
+
+export const maximize = (): string => {
+  return I18nString.i18nString(UiStrings.Maximize)
+}
+
+export const close = (): string => {
+  return I18nString.i18nString(UiStrings.Close)
+}
