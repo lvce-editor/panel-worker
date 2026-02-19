@@ -116,7 +116,7 @@ test('getPanelDom should render panel with tabs and fallback actions div when ac
   ])
 })
 
-test('getPanelDom should render actions reference when actions uid is set', () => {
+test('getPanelDom should render fallback actions div when actions uid is set', () => {
   const state: PanelState = {
     ...createDefaultState(),
     actionsUid: 42,
@@ -135,11 +135,6 @@ test('getPanelDom should render actions reference when actions uid is set', () =
   const dom = getPanelDom(state)
 
   expect(dom).toContainEqual({
-    type: VirtualDomElements.Reference,
-    uid: 42,
-  })
-
-  expect(dom).not.toContainEqual({
     childCount: 0,
     className: 'Actions',
     role: 'toolbar',
