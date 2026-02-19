@@ -1,10 +1,10 @@
-import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker';
+import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
 import { VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
 import type { PanelState } from '../PanelState/PanelState.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getPanelTabsVirtualDom } from '../GetPanelTabsVirtualDom/GetPanelTabsVirtualDom.js'
 
-const getActionsDom = (newState: PanelState) => {
+const getActionsDom: (newState: PanelState) => readonly VirtualDomNode[] = (newState) => {
   const actions = newState.actionsUid || -1
   if (actions === -1) {
     return [
@@ -24,7 +24,7 @@ const getActionsDom = (newState: PanelState) => {
   ]
 }
 
-const getGlobalActionsDom = () => {
+const getGlobalActionsDom: () => readonly VirtualDomNode[] = () => {
   return [
     {
       childCount: 2,
