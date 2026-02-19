@@ -31,8 +31,8 @@ test('resize should merge dimensions into state and call Viewlet.resize', async 
       return []
     },
   })
-  const state = createState({ childUid: 7, width: 100, height: 100 })
-  const dimensions = { width: 640, height: 480 }
+  const state = createState({ childUid: 7, height: 100, width: 100 })
+  const dimensions = { height: 480, width: 640 }
 
   const result = await Resize.resize(state, dimensions)
 
