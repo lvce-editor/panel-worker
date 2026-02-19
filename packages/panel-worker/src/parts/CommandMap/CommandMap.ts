@@ -1,5 +1,5 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
-import * as StatusBar from '../Create/Create.ts'
+import * as Panel from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../PanelStates/PanelStates.ts'
@@ -9,13 +9,13 @@ import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 
 export const commandMap = {
-  'StatusBar.create': StatusBar.create,
-  'StatusBar.diff2': diff2,
-  'StatusBar.getCommandIds': getCommandIds,
-  'StatusBar.loadContent': wrapCommand(LoadContent.loadContent),
-  'StatusBar.render2': render2,
-  'StatusBar.renderEventListeners': renderEventListeners,
-  'StatusBar.resize': wrapCommand(resize),
-  'StatusBar.saveState': wrapGetter(saveState),
-  'StatusBar.terminate': terminate,
+  'Panel.create': Panel.create,
+  'Panel.diff2': diff2,
+  'Panel.getCommandIds': getCommandIds,
+  'Panel.loadContent': wrapCommand(LoadContent.loadContent),
+  'Panel.render2': render2,
+  'Panel.renderEventListeners': renderEventListeners,
+  'Panel.resize': wrapCommand(resize),
+  'Panel.saveState': wrapGetter(saveState),
+  'Panel.terminate': terminate,
 }
