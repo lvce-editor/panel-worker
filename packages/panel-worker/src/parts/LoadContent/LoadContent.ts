@@ -79,7 +79,7 @@ export const openViewlet = async (state: PanelState, id: string, focus = false):
   // TODO get the actions uid somehow
   const actionsUid = Math.random()
   await createViewlet(id, childUid, tabId, childDimensions, '')
-  return { ...state, actionsUid, childUid, currentViewletId: id }
+  return { ...state, actionsUid, childUid, currentViewletId: id, initial: false }
 }
 
 export const handleClickClose = async (state: PanelState): Promise<PanelState> => {
