@@ -4,7 +4,7 @@ import type { PanelState } from '../PanelState/PanelState.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getPanelTabsVirtualDom } from '../GetPanelTabsVirtualDom/GetPanelTabsVirtualDom.js'
 
-const getActionsDom: (newState: PanelState) => readonly VirtualDomNode[] = (newState) => {
+const getActionsDom = (newState: PanelState): readonly VirtualDomNode[] => {
   const actions = newState.actionsUid || -1
   if (actions === -1) {
     return [
@@ -24,7 +24,7 @@ const getActionsDom: (newState: PanelState) => readonly VirtualDomNode[] = (newS
   ]
 }
 
-const getGlobalActionsDom: () => readonly VirtualDomNode[] = () => {
+const getGlobalActionsDom = (): readonly VirtualDomNode[] => {
   return [
     {
       childCount: 2,
