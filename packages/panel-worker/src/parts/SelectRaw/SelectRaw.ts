@@ -1,4 +1,4 @@
-import type { PanelState } from '../../PanelState/PanelState.ts'
+import type { PanelState } from '../PanelState/PanelState.ts'
 import * as SelectIndex from '../SelectIndex/SelectIndex.ts'
 
 export const selectRaw = async (state: PanelState, rawIndex: string): Promise<PanelState> => {

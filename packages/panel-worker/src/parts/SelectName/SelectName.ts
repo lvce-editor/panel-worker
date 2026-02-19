@@ -1,5 +1,5 @@
-import type { PanelState } from '../../PanelState/PanelState.ts'
-import { selectIndex } from '../LoadContent.ts'
+import type { PanelState } from '../PanelState/PanelState.ts'
+import { selectIndex } from '../LoadContent/LoadContent.ts'
 
 export const selectName = async (state: PanelState, name: string): Promise<PanelState> => {
   if (!name) {

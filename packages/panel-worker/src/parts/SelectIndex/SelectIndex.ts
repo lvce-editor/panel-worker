@@ -1,4 +1,4 @@
-import type { PanelState } from '../../PanelState/PanelState.ts'
+import type { PanelState } from '../PanelState/PanelState.ts'
 import * as OpenViewlet from '../OpenViewlet/OpenViewlet.ts'
 
 export const selectIndex = async (state: PanelState, index: number): Promise<PanelState> => {
