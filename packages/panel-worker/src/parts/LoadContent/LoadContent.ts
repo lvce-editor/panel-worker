@@ -3,7 +3,6 @@ import type { PanelState } from '../PanelState/PanelState.ts'
 import * as Assert from '../Assert/Assert.ts'
 import { createViewlet } from '../CreateViewlet/CreateViewlet.ts'
 import * as GetPanelViews from '../GetPanelViews/GetPanelViews.ts'
-import * as Id from '../Id/Id.ts'
 import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.ts'
 
 type ViewletId = string
