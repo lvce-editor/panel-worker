@@ -13,7 +13,7 @@ export interface PanelState {
   readonly selectedIndex: number
   readonly tabs: readonly Tab[]
   readonly uid: number
-  readonly views: any
+  readonly views: readonly string[]
   readonly warningCount: number
   readonly width: number
   readonly x: number

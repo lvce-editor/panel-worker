@@ -1,5 +1,9 @@
 import type { VirtualDomNode } from '@lvce-editor/virtual-dom-worker'
+<<<<<<< HEAD
 import { mergeClassNames, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+=======
+import { AriaRoles, VirtualDomElements } from '@lvce-editor/virtual-dom-worker'
+>>>>>>> origin/main
 import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as PanelStrings from '../PanelStrings/PanelStrings.ts'
@@ -9,7 +13,7 @@ export const getGlobalActionsDom = (): readonly VirtualDomNode[] => {
     {
       childCount: 2,
       className: ClassNames.PanelToolBar,
-      role: 'toolbar',
+      role: AriaRoles.ToolBar,
       type: VirtualDomElements.Div,
     },
     {
