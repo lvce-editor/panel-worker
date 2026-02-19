@@ -1,8 +1,8 @@
 import type { PanelState } from '../PanelState/PanelState.ts'
 import * as Assert from '../Assert/Assert.ts'
-import * as GetPanelViews from '../GetPanelViews/GetPanelViews.js'
-import * as Id from '../Id/Id.js'
-import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.js'
+import * as GetPanelViews from '../GetPanelViews/GetPanelViews.ts'
+import * as Id from '../Id/Id.ts'
+import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.ts'
 
 type ViewletId = string
 
