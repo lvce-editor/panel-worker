@@ -28,7 +28,5 @@ test('createViewlet should propagate rpc errors', async () => {
   const promise = CreateViewlet.createViewlet('test.viewlet', 1, 2, { height: 10, width: 10, x: 0, y: 0 }, 'file:///test')
 
   await expect(promise).rejects.toThrow('failed to create viewlet')
-  expect(mockRpc.invocations).toEqual([
-    ['Layout.createViewlet', 'test.viewlet', 1, 2, { height: 10, width: 10, x: 0, y: 0 }, 'file:///test'],
-  ])
+  expect(mockRpc.invocations).toEqual([['Layout.createViewlet', 'test.viewlet', 1, 2, { height: 10, width: 10, x: 0, y: 0 }, 'file:///test']])
 })
