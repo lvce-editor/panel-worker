@@ -1,3 +1,3 @@
 export interface SavedState {
-  readonly x: number
+  readonly currentViewletId: string
 }
