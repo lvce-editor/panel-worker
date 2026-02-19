@@ -9,9 +9,10 @@ const createPanelTab = (tab: string, badgeCount: number, isSelected: boolean, in
   if (isSelected) {
     className += ' ' + ClassNames.PanelTabSelected
   }
+  const childCount = badgeCount ? 2 : 1
   const tabDom: VirtualDomNode = {
     ariaSelected: isSelected,
-    childCount: 1,
+    childCount,
     className,
     'data-index': index,
     onClick: DomEventListenerFunctions.HandleClickSelectTab,
@@ -20,7 +21,6 @@ const createPanelTab = (tab: string, badgeCount: number, isSelected: boolean, in
   }
   const dom: VirtualDomNode[] = [tabDom, text(label)]
   if (badgeCount) {
-    tabDom.childCount++
     dom.push(
       {
         childCount: 1,
@@ -28,12 +28,16 @@ const createPanelTab = (tab: string, badgeCount: number, isSelected: boolean, in
         type: VirtualDomElements.Div,
       },
       text(' ' + badgeCount),
-    )
+      export const getPanelTabsVirtualDom = (tabs: readonly string[], selectedIndex: number, badgeCounts: Readonly<Record<string, number>>): readonly VirtualDomNode[] => {
   }
   return dom
 }
 
-export const getPanelTabsVirtualDom = (tabs: readonly string[], selectedIndex: number, badgeCounts: Record<string, number>): readonly VirtualDomNode[] => {
+export const getPanelTabsVirtualDom = (
+  tabs: readonly string[],
+  selectedIndex: number,
+  badgeCounts: Record<string, number>,
+): readonly VirtualDomNode[] => {
   const dom: VirtualDomNode[] = []
   for (let i = 0; i < tabs.length; i++) {
     const isSelected = i === selectedIndex
