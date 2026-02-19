@@ -55,9 +55,10 @@ test('getPanelDom should render panel with tabs and fallback actions div when ac
       childCount: 2,
       className: ClassNames.PanelTab,
       'data-index': 0,
+      name: 'PROBLEMS',
       onClick: DomEventListenerFunctions.HandleClickSelectTab,
       role: AriaRoles.Tab,
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Button,
     },
     text('PROBLEMS'),
     {
@@ -71,9 +72,10 @@ test('getPanelDom should render panel with tabs and fallback actions div when ac
       childCount: 1,
       className: `${ClassNames.PanelTab} ${ClassNames.PanelTabSelected}`,
       'data-index': 1,
+      name: 'OUTPUT',
       onClick: DomEventListenerFunctions.HandleClickSelectTab,
       role: AriaRoles.Tab,
-      type: VirtualDomElements.Div,
+      type: VirtualDomElements.Button,
     },
     text('OUTPUT'),
     {
