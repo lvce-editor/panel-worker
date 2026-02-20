@@ -2,15 +2,13 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'panel.show-problems'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, Locator, Panel }) => {
-  // Arrange
-
   // Act
   await Panel.open('Problems')
 
   // Assert
-  await expect(Locator('.Panel')).toBeVisible()
-  await expect(Locator('.PanelTab[name="Problems"]')).toHaveAttribute('aria-selected', 'true')
+  const panel = Locator('.Panel')
+  await expect(panel).toBeVisible()
+  const panelTab = Locator('.PanelTab[name="Problems"]')
+  await expect(panelTab).toHaveAttribute('aria-selected', 'true')
 }
