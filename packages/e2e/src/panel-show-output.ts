@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'panel.show-output.extension-empty-array'
+export const name = 'panel.show-output'
 
 export const skip = 1
 

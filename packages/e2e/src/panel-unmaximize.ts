@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'panel.unmaximize.extension-empty-array'
+export const name = 'panel.unmaximize'
 
 export const skip = 1
 

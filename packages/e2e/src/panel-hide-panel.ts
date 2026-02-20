@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'panel.hide-panel.extension-empty-array'
+export const name = 'panel.hide-panel'
 
 export const skip = 1
 

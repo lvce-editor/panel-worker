@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'panel.show-invalid-id-stays-selected-tab.extension-empty-array'
+export const name = 'panel.show-invalid-id-stays-selected-tab'
 
 export const skip = 1
 

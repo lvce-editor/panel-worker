@@ -1,6 +1,6 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'panel.handle-click-close.extension-empty-array'
+export const name = 'panel.handle-click-close'
 
 export const skip = 1
 
