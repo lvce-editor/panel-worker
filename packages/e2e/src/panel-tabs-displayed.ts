@@ -2,20 +2,19 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'panel.tabs-displayed'
 
-export const skip = 1
-
 export const test: Test = async ({ expect, Locator, Panel }) => {
-  // Arrange
+  // Act
   await Panel.openProblems()
 
-  // Act
-  const tabs = Locator('.PanelTab')
-
   // Assert
+  const tabs = Locator('.PanelTab')
   await expect(tabs).toHaveCount(4)
-
-  await expect(Locator('.PanelTab[name="Problems"]')).toBeVisible()
-  await expect(Locator('.PanelTab[name="Output"]')).toBeVisible()
-  await expect(Locator('.PanelTab[name="Debug Console"]')).toBeVisible()
-  await expect(Locator('.PanelTab[name="Terminals"]')).toBeVisible()
+  const tabProblems = Locator('.PanelTab[name="Problems"]')
+  await expect(tabProblems).toBeVisible()
+  const tabOutput = Locator('.PanelTab[name="Output"]')
+  await expect(tabOutput).toBeVisible()
+  const tabDebugConsole = Locator('.PanelTab[name="Debug Console"]')
+  await expect(tabDebugConsole).toBeVisible()
+  const tabTerminals = Locator('.PanelTab[name="Terminals"]')
+  await expect(tabTerminals).toBeVisible()
 }
