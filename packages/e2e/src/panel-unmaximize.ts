@@ -1,17 +1,17 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
 
-export const name = 'panel.hide-panel.extension-empty-array'
+export const name = 'panel.unmaximize'
 
 export const skip = 1
 
 export const test: Test = async ({ Command, expect, Locator, Panel }) => {
   // Arrange
   await Panel.openProblems()
-  await expect(Locator('.Panel')).toBeVisible()
+  await Command.execute('Layout.maximizePanel')
 
   // Act
-  await Command.execute('Layout.hidePanel')
+  await Command.execute('Layout.unmaximizePanel')
 
   // Assert
-  await expect(Locator('.Panel')).toBeHidden()
+  await expect(Locator('.Panel')).toBeVisible()
 }
