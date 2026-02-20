@@ -2,17 +2,15 @@ import type { Test } from '@lvce-editor/test-with-playwright'
 
 export const name = 'panel.show-invalid-id-stays-selected-tab'
 
-export const skip = 1
-
-export const test: Test = async ({ expect, Locator, Panel }) => {
+export const test: Test = async ({ Command, expect, Locator, Panel }) => {
   // Arrange
-  await Panel.open('Output')
-  const outputTab = Locator('.PanelTab[name="Output"]')
-  await expect(outputTab).toHaveAttribute('aria-selected', 'true')
+  await Panel.open('Problems')
+  const problemsTab = Locator('.PanelTab[name="Problems"]')
+  await expect(problemsTab).toHaveAttribute('aria-selected', 'true')
 
   // Act
-  await Panel.open('Invalid')
+  await Command.execute('Panel.selectName', 'not-found')
 
   // Assert
-  await expect(outputTab).toHaveAttribute('aria-selected', 'true')
+  await expect(problemsTab).toHaveAttribute('aria-selected', 'true')
 }
