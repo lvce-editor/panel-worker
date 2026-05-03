@@ -7,6 +7,7 @@ export interface PanelState {
   readonly childUid: number
   readonly currentViewletId: string
   readonly errorCount: number
+  readonly headerHeight: number
   readonly height: number
   readonly initial: boolean
   readonly platform: number

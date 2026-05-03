@@ -9,6 +9,7 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
     childUid: 0,
     currentViewletId: '',
     errorCount: 0,
+    headerHeight: 35,
     height: 0,
     initial: true,
     platform,

@@ -3,9 +3,9 @@ import type { PanelState } from '../PanelState/PanelState.ts'
 
 export const getContentDimensions = (dimensions: PanelState): PanelDimensions => {
   return {
-    height: dimensions.height - 35,
+    height: dimensions.height - dimensions.headerHeight,
     width: dimensions.width,
     x: dimensions.x,
-    y: dimensions.y + 35,
+    y: dimensions.y + dimensions.headerHeight,
   }
 }
