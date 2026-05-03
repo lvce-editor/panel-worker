@@ -2,9 +2,9 @@ import { expect, test } from '@jest/globals'
 import { MenuEntryId, MenuItemFlags } from '@lvce-editor/constants'
 import type { ContextMenuProps } from '../src/parts/ContextMenuProps/ContextMenuProps.ts'
 import type { MenuEntry } from '../src/parts/MenuEntry/MenuEntry.ts'
+import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { getMenuEntries } from '../src/parts/GetMenuEntries/GetMenuEntries.ts'
-import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 
 test('getMenuEntries returns panel tab context menu entries', () => {
   const state: PanelState = {
@@ -48,7 +48,7 @@ test('getMenuEntries returns empty array for unsupported menu id', () => {
   }
   const props = {
     menuId: MenuEntryId.Main,
-  } as ContextMenuProps
+  } as unknown as ContextMenuProps
 
   const result = getMenuEntries(state, props)
 
