@@ -6,7 +6,8 @@ export const toggleView = async (state: PanelState, name: string): Promise<Panel
   if (index === -1) {
     return state
   }
-  if (name === state.currentViewletId) {
+  const { currentViewletId } = state
+  if (name === currentViewletId) {
     return state
   }
   return SelectIndex.selectIndex(state, index)
