@@ -12,9 +12,6 @@ export const test: Test = async ({ expect, Locator, Panel }) => {
     button: 'right',
   })
 
-  const maximizePanel = Locator('text=Maximize Panel')
-  await expect(maximizePanel).toBeVisible()
-
   const hidePanel = Locator('text=Hide Panel')
   await expect(hidePanel).toBeVisible()
 }

@@ -17,6 +17,7 @@ export const commandMap = {
   'Panel.diff2': diff2,
   'Panel.getCommandIds': getCommandIds,
   'Panel.getMenuEntries': wrapGetter(getMenuEntries),
+  'Panel.getMenuEntries2': wrapGetter(getMenuEntries),
   'Panel.getMenuIds': getMenuIds,
   'Panel.handleBlur': wrapCommand(LoadContent.handleBlur),
   'Panel.handleClickClose': wrapCommand(LoadContent.handleClickClose),
