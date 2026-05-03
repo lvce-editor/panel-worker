@@ -3,6 +3,7 @@
     "target": "esnext",
     "lib": ["esnext", "WebWorker"],
     "checkJs": true,
+    "ignoreDeprecations": "6.0",
     "module": "esnext",
     "types": [],
     "moduleResolution": "node",
