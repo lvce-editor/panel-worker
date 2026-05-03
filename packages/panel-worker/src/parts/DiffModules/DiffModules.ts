@@ -1,7 +1,8 @@
+import * as DiffActionsUid from '../DiffActionsUid/DiffActionsUid.ts'
 import * as DiffChildUid from '../DiffChildUid/DiffChildUid.ts'
 import * as DiffItems from '../DiffItems/DiffItems.ts'
 import * as DiffType from '../DiffType/DiffType.ts'
 
-export const modules = [DiffItems.isEqual, DiffChildUid.isEqual]
+export const modules = [DiffItems.isEqual, DiffChildUid.isEqual, DiffActionsUid.isEqual]
 
-export const numbers = [DiffType.RenderIncremental, DiffType.RenderChildUid]
+export const numbers = [DiffType.RenderIncremental, DiffType.RenderChildUid, DiffType.RenderActionsUid]
