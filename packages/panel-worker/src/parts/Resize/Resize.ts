@@ -15,7 +15,7 @@ export const resize = async (state: PanelState, dimensions: any): Promise<PanelS
     }
   }
   // @ts-ignore
-  const commands = await RendererWorker.invoke('Viewlet.resize', childUid, dimensions)
+  await RendererWorker.invoke('Viewlet.resize', childUid, dimensions)
   return {
     ...newState,
   }

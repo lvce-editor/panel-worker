@@ -46,7 +46,7 @@ test('diff2 should return empty diff when relevant state is unchanged', () => {
     x: 0,
     y: 0,
   }
-  PanelStates.set(uid, newState, oldState)
+  PanelStates.set(uid, oldState, newState)
 
   const result = Diff2.diff2(uid)
 
@@ -93,7 +93,7 @@ test('diff2 should return RenderIncremental diff when assetDir changes', () => {
     x: 0,
     y: 0,
   }
-  PanelStates.set(uid, newState, oldState)
+  PanelStates.set(uid, oldState, newState)
 
   const result = Diff2.diff2(uid)
 
@@ -140,7 +140,7 @@ test('diff2 should return RenderIncremental and RenderChildUid when childUid cha
     x: 0,
     y: 0,
   }
-  PanelStates.set(uid, newState, oldState)
+  PanelStates.set(uid, oldState, newState)
 
   const result = Diff2.diff2(uid)
 
