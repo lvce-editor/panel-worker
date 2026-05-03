@@ -146,3 +146,50 @@ test('diff2 should return RenderIncremental and RenderChildUid when childUid cha
 
   expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderChildUid])
 })
+
+test('diff2 should return RenderIncremental and RenderActionsUid when actionsUid changes', () => {
+  const uid = 1004
+  const oldState: PanelState = {
+    ...createDefaultState(),
+    actionsUid: 7,
+    assetDir: '/same-dir',
+    badgeCounts: {},
+    childUid: 8,
+    currentViewletId: '',
+    errorCount: 0,
+    height: 200,
+    initial: false,
+    platform: 0,
+    selectedIndex: 0,
+    uid,
+    views: ['PROBLEMS'],
+    warningCount: 0,
+    width: 300,
+    x: 0,
+    y: 0,
+  }
+  const newState: PanelState = {
+    ...createDefaultState(),
+    actionsUid: 9,
+    assetDir: '/same-dir',
+    badgeCounts: {},
+    childUid: 8,
+    currentViewletId: '',
+    errorCount: 0,
+    height: 200,
+    initial: false,
+    platform: 0,
+    selectedIndex: 0,
+    uid,
+    views: ['PROBLEMS'],
+    warningCount: 0,
+    width: 300,
+    x: 0,
+    y: 0,
+  }
+  PanelStates.set(uid, oldState, newState)
+
+  const result = Diff2.diff2(uid)
+
+  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderActionsUid])
+})

@@ -9,7 +9,7 @@ export const openViewlet = async (state: PanelState, id: string, focus = false):
   const tabId = GetUid.getUid()
   const actionsUid = GetUid.getUid()
   const index = state.views.indexOf(id)
-  await createViewlet(id, childUid, tabId, childDimensions, '')
+  await createViewlet(id, childUid, tabId, actionsUid, childDimensions, '')
   return {
     ...state,
     actionsUid,
