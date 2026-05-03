@@ -13,6 +13,8 @@ test('create should store state with the given uid', () => {
   const oldStateTyped: PanelState = oldState
   expect(newStateTyped).toBeDefined()
   expect(newStateTyped.uid).toBe(uid)
+  expect(newStateTyped.headerHeight).toBe(35)
   expect(oldStateTyped).toBeDefined()
   expect(oldStateTyped.uid).toBe(uid)
+  expect(oldStateTyped.headerHeight).toBe(35)
 })

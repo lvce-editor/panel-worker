@@ -8,6 +8,7 @@ export const createDefaultState = (): PanelState => {
     childUid: 0,
     currentViewletId: '',
     errorCount: 0,
+    headerHeight: 35,
     height: 0,
     initial: true,
     platform: 0,
