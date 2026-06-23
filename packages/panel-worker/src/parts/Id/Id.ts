@@ -1,6 +1,8 @@
-let idCounter = 0
+const idState = {
+  counter: 0,
+}
 
 export const create = (): number => {
-  idCounter++
-  return idCounter
+  idState.counter++
+  return idState.counter
 }

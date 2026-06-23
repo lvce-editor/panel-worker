@@ -1,10 +1,11 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
+import type { TestContext } from './TestContext.ts'
 
 export const name = 'panel.switch-tabs'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Locator, Panel }) => {
+export const test: Test = async ({ Command, expect, Locator, Panel }: TestContext) => {
   // Arrange
   await Panel.openProblems()
   const problemsTab = Locator('.PanelTab[name="Problems"]')
