@@ -22,6 +22,6 @@ export const getPanelHeaderDom = (newState: PanelState): readonly VirtualDomNode
     },
     ...tabsDom,
     ...getActionsDom(newState),
-    ...getGlobalActionsDom(),
+    ...getGlobalActionsDom(newState),
   ]
 }

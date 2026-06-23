@@ -12,6 +12,7 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
     headerHeight: 35,
     height: 0,
     initial: true,
+    maximized: false,
     platform,
     selectedIndex: -1,
     tabs: [],

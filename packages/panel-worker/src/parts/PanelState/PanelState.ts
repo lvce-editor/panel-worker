@@ -10,6 +10,7 @@ export interface PanelState {
   readonly headerHeight: number
   readonly height: number
   readonly initial: boolean
+  readonly maximized: boolean
   readonly platform: number
   readonly selectedIndex: number
   readonly tabs: readonly Tab[]

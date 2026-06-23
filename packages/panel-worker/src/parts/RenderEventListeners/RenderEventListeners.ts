@@ -8,6 +8,10 @@ export const renderEventListeners = (): readonly any[] => {
       params: ['handleClickMaximize'],
     },
     {
+      name: DomEventListenersFunctions.HandleClickUnmaximize,
+      params: ['handleClickUnmaximize'],
+    },
+    {
       name: DomEventListenersFunctions.HandleClickClose,
       params: ['handleClickClose'],
     },

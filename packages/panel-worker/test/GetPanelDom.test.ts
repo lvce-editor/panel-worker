@@ -142,3 +142,45 @@ test('getPanelDom should render actions reference when actions uid is set', () =
     uid: 99,
   })
 })
+
+test('getPanelDom should render unmaximize button when maximized', () => {
+  const state: PanelState = {
+    ...createDefaultState(),
+    actionsUid: 0,
+    assetDir: '',
+    badgeCounts: {},
+    childUid: 99,
+    errorCount: 0,
+    initial: false,
+    maximized: true,
+    platform: 0,
+    selectedIndex: 0,
+    uid: 1,
+    views: ['PROBLEMS'],
+    warningCount: 0,
+  }
+
+  const dom = getPanelDom(state)
+
+  expect(dom).toContainEqual({
+    ariaLabel: 'Unmaximize',
+    childCount: 1,
+    className: 'IconButton',
+    onClick: DomEventListenerFunctions.HandleClickUnmaximize,
+    title: 'Unmaximize',
+    type: VirtualDomElements.Button,
+  })
+  expect(dom).toContainEqual({
+    childCount: 0,
+    className: 'MaskIcon MaskIconRestore',
+    type: VirtualDomElements.Div,
+  })
+  expect(dom).not.toContainEqual({
+    ariaLabel: 'Maximize',
+    childCount: 1,
+    className: 'IconButton',
+    onClick: DomEventListenerFunctions.HandleClickMaximize,
+    title: 'Maximize',
+    type: VirtualDomElements.Button,
+  })
+})

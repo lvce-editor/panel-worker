@@ -12,6 +12,7 @@ test('getContentDimensions should derive bounds from header height in state', ()
     headerHeight: 35,
     height: 200,
     initial: false,
+    maximized: false,
     platform: 0,
     selectedIndex: -1,
     tabs: [],

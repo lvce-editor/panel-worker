@@ -5,6 +5,7 @@ export const isEqual = (oldState: PanelState, newState: PanelState): boolean => 
     oldState.assetDir === newState.assetDir &&
     oldState.initial === newState.initial &&
     oldState.currentViewletId === newState.currentViewletId &&
+    oldState.maximized === newState.maximized &&
     oldState.selectedIndex === newState.selectedIndex &&
     oldState.views === newState.views &&
     oldState.childUid === newState.childUid &&
