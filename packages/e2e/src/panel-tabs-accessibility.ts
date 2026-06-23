@@ -1,10 +1,11 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
+import type { TestContext } from './TestContext.ts'
 
 export const name = 'panel.tabs-accessibility'
 
 export const skip = 1
 
-export const test: Test = async ({ expect, Locator, Panel }) => {
+export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
   // Arrange
   await Panel.openProblems()
 

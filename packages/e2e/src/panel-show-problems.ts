@@ -1,8 +1,9 @@
 import type { Test } from '@lvce-editor/test-with-playwright'
+import type { TestContext } from './TestContext.ts'
 
 export const name = 'panel.show-problems'
 
-export const test: Test = async ({ expect, Locator, Panel }) => {
+export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
   // Act
   await Panel.open('Problems')
 
