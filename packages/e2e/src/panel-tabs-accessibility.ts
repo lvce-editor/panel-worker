@@ -15,6 +15,7 @@ export const test: Test = async ({ expect, Locator, Panel }) => {
   await expect(tabs).toHaveCount(4)
 
   for (let i = 0; i < 4; i++) {
-    await expect(tabs.nth(i)).toHaveAttribute('role', 'tab')
+    const tab = tabs.nth(i)
+    await expect(tab).toHaveAttribute('role', 'tab')
   }
 }

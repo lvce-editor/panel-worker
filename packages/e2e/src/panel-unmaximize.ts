@@ -6,6 +6,7 @@ export const skip = 1
 
 export const test: Test = async ({ Command, expect, Locator, Panel }) => {
   // Arrange
+  const panel = Locator('.Panel')
   await Panel.openProblems()
   await Command.execute('Layout.maximizePanel')
 
@@ -13,5 +14,5 @@ export const test: Test = async ({ Command, expect, Locator, Panel }) => {
   await Command.execute('Layout.unmaximizePanel')
 
   // Assert
-  await expect(Locator('.Panel')).toBeVisible()
+  await expect(panel).toBeVisible()
 }

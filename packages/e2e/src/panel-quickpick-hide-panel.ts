@@ -6,12 +6,13 @@ export const skip = 1
 
 export const test: Test = async ({ expect, Locator, Panel, QuickPick }) => {
   // Arrange
+  const panel = Locator('.Panel')
   await Panel.openProblems()
-  await expect(Locator('.Panel')).toBeVisible()
+  await expect(panel).toBeVisible()
 
   // Act
   await QuickPick.executeCommand('Layout: Toggle Panel')
 
   // Assert
-  await expect(Locator('.Panel')).toBeHidden()
+  await expect(panel).toBeHidden()
 }
