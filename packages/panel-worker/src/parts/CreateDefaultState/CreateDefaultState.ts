@@ -11,6 +11,7 @@ export const createDefaultState = (): PanelState => {
     headerHeight: 35,
     height: 0,
     initial: true,
+    maximized: false,
     platform: 0,
     selectedIndex: -1,
     tabs: [],

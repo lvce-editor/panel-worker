@@ -98,3 +98,30 @@ test('renderIncremental should use uid from new state', () => {
   expect(result[0]).toBe(ViewletCommand.SetPatches)
   expect(result[1]).toBe(99)
 })
+
+test('renderIncremental should return patches when maximized changes', () => {
+  const oldState: PanelState = {
+    ...createDefaultState(),
+    actionsUid: 0,
+    assetDir: '',
+    badgeCounts: {},
+    childUid: 7,
+    initial: false,
+    maximized: false,
+    platform: 0,
+    selectedIndex: 0,
+    uid: 1,
+    views: ['PROBLEMS'],
+  }
+  const newState: PanelState = {
+    ...oldState,
+    maximized: true,
+  }
+
+  const result = renderIncremental(oldState, newState)
+
+  expect(result[0]).toBe(ViewletCommand.SetPatches)
+  expect(result[1]).toBe(1)
+  expect(Array.isArray(result[2])).toBe(true)
+  expect(result[2].length).toBeGreaterThan(0)
+})
