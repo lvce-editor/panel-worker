@@ -1,6 +1,9 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
 import * as Panel from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
+import { getMenuEntries } from '../GetMenuEntries/GetMenuEntries.ts'
+import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
+import { handleTabContextMenu } from '../HandleTabContextMenu/HandleTabContextMenu.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../PanelStates/PanelStates.ts'
 import { render2 } from '../Render2/Render2.ts'
@@ -13,10 +16,14 @@ export const commandMap = {
   'Panel.create': Panel.create,
   'Panel.diff2': diff2,
   'Panel.getCommandIds': getCommandIds,
+  'Panel.getMenuEntries': wrapGetter(getMenuEntries),
+  'Panel.getMenuEntries2': wrapGetter(getMenuEntries),
+  'Panel.getMenuIds': getMenuIds,
   'Panel.handleBlur': wrapCommand(LoadContent.handleBlur),
   'Panel.handleClickClose': wrapCommand(LoadContent.handleClickClose),
   'Panel.handleClickMaximize': wrapCommand(LoadContent.handleClickMaximize),
   'Panel.handleFilterInput': wrapCommand(LoadContent.handleFilterInput),
+  'Panel.handleTabContextMenu': wrapCommand(handleTabContextMenu),
   'Panel.loadContent': wrapCommand(LoadContent.loadContent),
   'Panel.openViewlet': wrapCommand(LoadContent.openViewlet),
   'Panel.render2': render2,

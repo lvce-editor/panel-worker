@@ -14,6 +14,7 @@ export const createPanelTab = (tab: string, badgeCount: number, isSelected: bool
     className,
     name: tab,
     onClick: DomEventListenerFunctions.HandleClickTab,
+    onContextMenu: DomEventListenerFunctions.HandleTabContextMenu,
     role: AriaRoles.Tab,
     type: VirtualDomElements.Button,
   }
