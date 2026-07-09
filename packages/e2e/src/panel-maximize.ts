@@ -1,4 +1,4 @@
-import type { Test } from '@lvce-editor/test-with-playwright'
+import type { Test } from '@lvce-editor/test-worker'
 import type { TestContext } from './TestContext.ts'
 
 export const name = 'panel.maximize'
