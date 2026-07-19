@@ -5,8 +5,9 @@ interface PanelLayoutChange {
 }
 
 export const handlePanelLayoutChanged = (state: PanelState, change: PanelLayoutChange): PanelState => {
+  const { maximized: currentMaximized } = state
   const { maximized } = change
-  if (state.maximized === maximized) {
+  if (currentMaximized === maximized) {
     return state
   }
   return {
