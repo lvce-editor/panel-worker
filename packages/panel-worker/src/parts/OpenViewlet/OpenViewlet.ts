@@ -4,11 +4,12 @@ import * as GetContentDimensions from '../GetContentDimensions/GetContentDimensi
 import * as GetUid from '../GetUid/GetUid.ts'
 
 export const openViewlet = async (state: PanelState, id: string, focus = false): Promise<PanelState> => {
+  const { views } = state
   const childDimensions = GetContentDimensions.getContentDimensions(state)
   const childUid = GetUid.getUid()
   const tabId = GetUid.getUid()
   const actionsUid = GetUid.getUid()
-  const index = state.views.indexOf(id)
+  const index = views.indexOf(id)
   await createViewlet(id, childUid, tabId, actionsUid, childDimensions, '')
   return {
     ...state,
