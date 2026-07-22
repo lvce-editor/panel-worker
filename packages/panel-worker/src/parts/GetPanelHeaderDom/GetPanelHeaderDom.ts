@@ -6,14 +6,16 @@ import { getActionsDom } from '../GetActionsDom/GetActionsDom.ts'
 import { getGlobalActionsDom } from '../GetGlobalActionsDom/GetGlobalActionsDom.ts'
 import { getPanelTabsVirtualDom } from '../GetPanelTabsVirtualDom/GetPanelTabsVirtualDom.ts'
 
+const panelHeaderNode: VirtualDomNode = {
+  childCount: 3,
+  className: ClassNames.PanelHeader,
+  type: VirtualDomElements.Div,
+}
+
 export const getPanelHeaderDom = (newState: PanelState): readonly VirtualDomNode[] => {
   const tabsDom = getPanelTabsVirtualDom(newState.views, newState.selectedIndex, newState.badgeCounts)
   return [
-    {
-      childCount: 3,
-      className: ClassNames.PanelHeader,
-      type: VirtualDomElements.Div,
-    },
+    panelHeaderNode,
     {
       childCount: newState.views.length,
       className: ClassNames.PanelTabs,

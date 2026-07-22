@@ -4,6 +4,12 @@ import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as GetTabClassName from '../GetTabClassName/GetTabClassName.ts'
 
+const badgeNode: VirtualDomNode = {
+  childCount: 1,
+  className: ClassNames.Badge,
+  type: VirtualDomElements.Div,
+}
+
 export const createPanelTab = (tab: string, badgeCount: number, isSelected: boolean): readonly VirtualDomNode[] => {
   const label = tab
   const className = GetTabClassName.getTabClassName(isSelected)
@@ -19,14 +25,7 @@ export const createPanelTab = (tab: string, badgeCount: number, isSelected: bool
   }
   const dom: VirtualDomNode[] = [tabDom, text(label)]
   if (badgeCount) {
-    dom.push(
-      {
-        childCount: 1,
-        className: ClassNames.Badge,
-        type: VirtualDomElements.Div,
-      },
-      text(' ' + badgeCount),
-    )
+    dom.push(badgeNode, text(' ' + badgeCount))
   }
   return dom
 }

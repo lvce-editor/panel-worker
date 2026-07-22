@@ -5,18 +5,20 @@ import * as ClassNames from '../ClassNames/ClassNames.ts'
 import * as DomEventListenerFunctions from '../DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import * as PanelStrings from '../PanelStrings/PanelStrings.ts'
 
+const panelToolBarNode: VirtualDomNode = {
+  childCount: 2,
+  className: ClassNames.PanelToolBar,
+  role: AriaRoles.ToolBar,
+  type: VirtualDomElements.Div,
+}
+
 export const getGlobalActionsDom = (state: Pick<PanelState, 'maximized'>): readonly VirtualDomNode[] => {
   const { maximized } = state
   const maximizeLabel = maximized ? PanelStrings.unmaximize() : PanelStrings.maximize()
   const maximizeOnClick = maximized ? DomEventListenerFunctions.HandleClickUnmaximize : DomEventListenerFunctions.HandleClickMaximize
   const maximizeIcon = maximized ? ClassNames.MaskIconRestore : ClassNames.MaskIconChevronUp
   return [
-    {
-      childCount: 2,
-      className: ClassNames.PanelToolBar,
-      role: AriaRoles.ToolBar,
-      type: VirtualDomElements.Div,
-    },
+    panelToolBarNode,
     {
       ariaLabel: maximizeLabel,
       childCount: 1,
