@@ -5,7 +5,7 @@ export const name = 'panel.maximize'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Locator, Panel }: TestContext) => {
+export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
   // Arrange
   const panel = Locator('.Panel')
   const maximizeButton = Locator('[aria-label="Maximize"]')
@@ -14,7 +14,7 @@ export const test: Test = async ({ Command, expect, Locator, Panel }: TestContex
   await expect(panel).toBeVisible()
 
   // Act
-  await Command.execute('Layout.maximizePanel')
+  await Panel.maximize()
 
   // Assert
   await expect(panel).toBeVisible()
