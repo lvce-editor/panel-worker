@@ -7,44 +7,6 @@ const getTab = (Locator: TestContext['Locator'], name: PanelName): ReturnType<Te
   return Locator(`.PanelTab[name="${name}"]`)
 }
 
-export const createBadgeTest = (view: PanelName, count: number): Test => {
-  return async ({ Command, expect, Locator, Panel }: TestContext) => {
-    // Arrange
-    await Panel.open(view)
-    const badge = getTab(Locator, view).locator('.Badge')
-
-    // Act
-    await Command.execute('Panel.setBadgeCount', view, count)
-
-    // Assert
-    await expect(badge).toHaveText(String(count))
-
-    // Cleanup
-    await Command.execute('Panel.setBadgeCount', view, 0)
-    await expect(badge).toHaveCount(0)
-  }
-}
-
-export const createBadgeUpdateTest = (view: PanelName, initialCount: number, updatedCount: number): Test => {
-  return async ({ Command, expect, Locator, Panel }: TestContext) => {
-    // Arrange
-    await Panel.open(view)
-    const badge = getTab(Locator, view).locator('.Badge')
-    await Command.execute('Panel.setBadgeCount', view, initialCount)
-    await expect(badge).toHaveText(String(initialCount))
-
-    // Act
-    await Command.execute('Panel.setBadgeCount', view, updatedCount)
-
-    // Assert
-    await expect(badge).toHaveText(String(updatedCount))
-
-    // Cleanup
-    await Command.execute('Panel.setBadgeCount', view, 0)
-    await expect(badge).toHaveCount(0)
-  }
-}
-
 export const createSelectNameTest = (from: PanelName, to: PanelName): Test => {
   return async ({ Command, expect, Locator, Panel }: TestContext) => {
     // Arrange
@@ -117,6 +79,40 @@ export const createSelectIndexTest = (from: PanelName, index: number, to: PanelN
 
     // Act
     await Command.execute('Panel.selectIndex', index)
+
+    // Assert
+    await expect(fromTab).toHaveAttribute('aria-selected', 'false')
+    await expect(toTab).toHaveAttribute('aria-selected', 'true')
+  }
+}
+
+export const createSelectIndexRawTest = (from: PanelName, rawIndex: string, to: PanelName): Test => {
+  return async ({ Command, expect, Locator, Panel }: TestContext) => {
+    // Arrange
+    await Panel.open(from)
+    const fromTab = getTab(Locator, from)
+    const toTab = getTab(Locator, to)
+    await expect(fromTab).toHaveAttribute('aria-selected', 'true')
+
+    // Act
+    await Command.execute('Panel.selectIndexRaw', rawIndex)
+
+    // Assert
+    await expect(fromTab).toHaveAttribute('aria-selected', 'false')
+    await expect(toTab).toHaveAttribute('aria-selected', 'true')
+  }
+}
+
+export const createToggleViewTest = (from: PanelName, to: PanelName): Test => {
+  return async ({ Command, expect, Locator, Panel }: TestContext) => {
+    // Arrange
+    await Panel.open(from)
+    const fromTab = getTab(Locator, from)
+    const toTab = getTab(Locator, to)
+    await expect(fromTab).toHaveAttribute('aria-selected', 'true')
+
+    // Act
+    await Command.execute('Panel.toggleView', to)
 
     // Assert
     await expect(fromTab).toHaveAttribute('aria-selected', 'false')
