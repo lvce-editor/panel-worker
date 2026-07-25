@@ -5,11 +5,11 @@ export const name = 'panel.show-panel'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Locator }: TestContext) => {
+export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
   // Arrange
 
   // Act
-  await Command.execute('Layout.showPanel', 'Problems')
+  await Panel.open('Problems')
 
   // Assert
   const panel = Locator('.Panel')
