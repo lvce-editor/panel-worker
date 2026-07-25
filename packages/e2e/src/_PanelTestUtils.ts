@@ -3,7 +3,7 @@ import type { TestContext } from './_TestContext.ts'
 
 export type PanelName = 'Debug Console' | 'Output' | 'Problems' | 'Terminals'
 
-const getTab = (Locator: TestContext['Locator'], name: PanelName) => {
+const getTab = (Locator: TestContext['Locator'], name: PanelName): ReturnType<TestContext['Locator']> => {
   return Locator(`.PanelTab[name="${name}"]`)
 }
 
@@ -17,7 +17,7 @@ export const createBadgeTest = (view: PanelName, count: number): Test => {
     await Command.execute('Panel.setBadgeCount', view, count)
 
     // Assert
-    await expect(badge).toHaveText(`${count}`)
+    await expect(badge).toHaveText(String(count))
 
     // Cleanup
     await Command.execute('Panel.setBadgeCount', view, 0)
@@ -31,13 +31,13 @@ export const createBadgeUpdateTest = (view: PanelName, initialCount: number, upd
     await Panel.open(view)
     const badge = getTab(Locator, view).locator('.Badge')
     await Command.execute('Panel.setBadgeCount', view, initialCount)
-    await expect(badge).toHaveText(`${initialCount}`)
+    await expect(badge).toHaveText(String(initialCount))
 
     // Act
     await Command.execute('Panel.setBadgeCount', view, updatedCount)
 
     // Assert
-    await expect(badge).toHaveText(`${updatedCount}`)
+    await expect(badge).toHaveText(String(updatedCount))
 
     // Cleanup
     await Command.execute('Panel.setBadgeCount', view, 0)
@@ -45,8 +45,8 @@ export const createBadgeUpdateTest = (view: PanelName, initialCount: number, upd
   }
 }
 
-export const createClickTabTest = (from: PanelName, to: PanelName): Test => {
-  return async ({ expect, Locator, Panel }: TestContext) => {
+export const createSelectNameTest = (from: PanelName, to: PanelName): Test => {
+  return async ({ Command, expect, Locator, Panel }: TestContext) => {
     // Arrange
     await Panel.open(from)
     const fromTab = getTab(Locator, from)
@@ -54,7 +54,7 @@ export const createClickTabTest = (from: PanelName, to: PanelName): Test => {
     await expect(fromTab).toHaveAttribute('aria-selected', 'true')
 
     // Act
-    await toTab.click()
+    await Command.execute('Panel.selectName', to)
 
     // Assert
     await expect(fromTab).toHaveAttribute('aria-selected', 'false')
