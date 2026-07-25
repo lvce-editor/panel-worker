@@ -3,12 +3,12 @@ import type { TestContext } from './_TestContext.ts'
 
 export const name = 'panel.handle-click-close'
 
-export const test: Test = async ({ Command, expect, Locator, Panel }: TestContext) => {
+export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
   // Arrange
   await Panel.openProblems()
 
   // Act
-  await Command.execute('Panel.handleClickClose')
+  await Panel.close()
 
   // Assert
   const panel = Locator('.Panel')
