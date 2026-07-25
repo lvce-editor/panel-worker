@@ -25,7 +25,8 @@ export const createPanelTab = (tab: string, badgeCount: number, isSelected: bool
   }
   const dom: VirtualDomNode[] = [tabDom, text(label)]
   if (badgeCount) {
-    dom.push(badgeNode, text(' ' + badgeCount))
+    const badgeCountText = ` ${badgeCount}`
+    dom.push(badgeNode, text(badgeCountText))
   }
   return dom
 }
