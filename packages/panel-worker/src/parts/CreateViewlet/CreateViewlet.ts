@@ -7,6 +7,7 @@ export const createViewlet = async (
   actionsUid: number,
   bounds: any,
   uri: string,
+  focus: boolean,
 ): Promise<void> => {
-  await RendererWorker.invoke('Layout.createPanelViewlet', viewletModuleId, editorUid, tabId, actionsUid, bounds, uri)
+  await RendererWorker.invoke('Layout.createPanelViewlet', viewletModuleId, editorUid, tabId, actionsUid, bounds, uri, focus)
 }

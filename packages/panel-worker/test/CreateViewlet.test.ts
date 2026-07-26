@@ -14,9 +14,9 @@ test('createViewlet should invoke Layout.createPanelViewlet with expected argume
   const bounds = { height: 200, width: 100, x: 1, y: 2 }
   const uri = 'file:///test.txt'
 
-  await CreateViewlet.createViewlet(viewletModuleId, editorUid, tabId, actionsUid, bounds, uri)
+  await CreateViewlet.createViewlet(viewletModuleId, editorUid, tabId, actionsUid, bounds, uri, false)
 
-  expect(mockRpc.invocations).toEqual([['Layout.createPanelViewlet', viewletModuleId, editorUid, tabId, actionsUid, bounds, uri]])
+  expect(mockRpc.invocations).toEqual([['Layout.createPanelViewlet', viewletModuleId, editorUid, tabId, actionsUid, bounds, uri, false]])
 })
 
 test('createViewlet should propagate rpc errors', async () => {
@@ -26,8 +26,10 @@ test('createViewlet should propagate rpc errors', async () => {
     },
   })
 
-  const promise = CreateViewlet.createViewlet('test.viewlet', 1, 2, 3, { height: 10, width: 10, x: 0, y: 0 }, 'file:///test')
+  const promise = CreateViewlet.createViewlet('test.viewlet', 1, 2, 3, { height: 10, width: 10, x: 0, y: 0 }, 'file:///test', true)
 
   await expect(promise).rejects.toThrow('failed to create viewlet')
-  expect(mockRpc.invocations).toEqual([['Layout.createPanelViewlet', 'test.viewlet', 1, 2, 3, { height: 10, width: 10, x: 0, y: 0 }, 'file:///test']])
+  expect(mockRpc.invocations).toEqual([
+    ['Layout.createPanelViewlet', 'test.viewlet', 1, 2, 3, { height: 10, width: 10, x: 0, y: 0 }, 'file:///test', true],
+  ])
 })
