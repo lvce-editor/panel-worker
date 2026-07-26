@@ -19,9 +19,7 @@ test('selectIndex focuses the selected panel view', async () => {
 
   const result = await SelectIndex.selectIndex(state, 1)
 
-  expect(mockRpc.invocations).toEqual([
-    ['Layout.createPanelViewlet', 'Terminals', 11, 22, 33, { height: 165, width: 300, x: 10, y: 55 }, '', true],
-  ])
+  expect(mockRpc.invocations).toEqual([['Layout.createPanelViewlet', 'Terminals', 11, 22, 33, { height: 165, width: 300, x: 10, y: 55 }, '', true]])
   expect(result).toMatchObject({
     childUid: 11,
     currentViewletId: 'Terminals',
