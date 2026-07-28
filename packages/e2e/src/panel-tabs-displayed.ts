@@ -9,7 +9,7 @@ export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
 
   // Assert
   const tabs = Locator('.PanelTab')
-  await expect(tabs).toHaveCount(4)
+  await expect(tabs).toHaveCount(5)
   const tabProblems = Locator('.PanelTab[name="Problems"]')
   await expect(tabProblems).toBeVisible()
   const tabOutput = Locator('.PanelTab[name="Output"]')
@@ -18,4 +18,6 @@ export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
   await expect(tabDebugConsole).toBeVisible()
   const tabTerminals = Locator('.PanelTab[name="Terminals"]')
   await expect(tabTerminals).toBeVisible()
+  const tabPorts = Locator('.PanelTab[name="Ports"]')
+  await expect(tabPorts).toBeVisible()
 }
