@@ -3,7 +3,13 @@ import { getPanelViews } from '../src/parts/GetPanelViews/GetPanelViews.ts'
 import * as ViewletModuleId from '../src/parts/ViewletModuleId/ViewletModuleId.ts'
 
 test('getPanelViews should return all panel views in the expected order', () => {
-  expect(getPanelViews()).toEqual([ViewletModuleId.Problems, ViewletModuleId.Output, ViewletModuleId.DebugConsole, ViewletModuleId.Terminals])
+  expect(getPanelViews()).toEqual([
+    ViewletModuleId.Problems,
+    ViewletModuleId.Output,
+    ViewletModuleId.DebugConsole,
+    ViewletModuleId.Terminals,
+    ViewletModuleId.Ports,
+  ])
 })
 
 test('getPanelViews should return a new array on every call', () => {
