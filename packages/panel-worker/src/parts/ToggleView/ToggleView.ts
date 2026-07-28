@@ -1,7 +1,7 @@
 import type { PanelState } from '../PanelState/PanelState.ts'
 import * as SelectIndex from '../SelectIndex/SelectIndex.ts'
 
-export const toggleView = async (state: PanelState, name: string): Promise<PanelState> => {
+export const toggleView = async (state: PanelState, name: string, uri = ''): Promise<PanelState> => {
   const { currentViewletId, views } = state
   const index = views.indexOf(name)
   if (index === -1) {
@@ -10,5 +10,5 @@ export const toggleView = async (state: PanelState, name: string): Promise<Panel
   if (name === currentViewletId) {
     return state
   }
-  return SelectIndex.selectIndex(state, index)
+  return SelectIndex.selectIndex(state, index, uri)
 }

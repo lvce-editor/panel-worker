@@ -3,7 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as SelectIndex from '../src/parts/SelectIndex/SelectIndex.ts'
 
-test('selectIndex focuses the selected panel view', async () => {
+test('selectIndex focuses the selected panel view with the requested uri', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Layout.createPanelViewlet': async () => {},
   })
@@ -17,9 +17,11 @@ test('selectIndex focuses the selected panel view', async () => {
     y: 20,
   }
 
-  const result = await SelectIndex.selectIndex(state, 1)
+  const result = await SelectIndex.selectIndex(state, 1, 'file:///workspace/folder')
 
-  expect(mockRpc.invocations).toEqual([['Layout.createPanelViewlet', 'Terminals', 11, 22, 33, { height: 165, width: 300, x: 10, y: 55 }, '', true]])
+  expect(mockRpc.invocations).toEqual([
+    ['Layout.createPanelViewlet', 'Terminals', 11, 22, 33, { height: 165, width: 300, x: 10, y: 55 }, 'file:///workspace/folder', true],
+  ])
   expect(result).toMatchObject({
     childUid: 11,
     currentViewletId: 'Terminals',
