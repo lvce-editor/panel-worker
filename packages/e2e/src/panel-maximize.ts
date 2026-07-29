@@ -19,5 +19,5 @@ export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
   // Assert
   await expect(panel).toBeVisible()
   await expect(unmaximizeButton).toBeVisible()
-  await expect(maximizeButton).not.toBeVisible()
+  await expect(maximizeButton).toBeHidden()
 }

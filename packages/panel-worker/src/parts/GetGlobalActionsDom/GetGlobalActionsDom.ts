@@ -12,6 +12,12 @@ const panelToolBarNode: VirtualDomNode = {
   type: VirtualDomElements.Div,
 }
 
+const closeIconNode: VirtualDomNode = {
+  childCount: 0,
+  className: mergeClassNames(ClassNames.MaskIcon, ClassNames.MaskIconClose),
+  type: VirtualDomElements.Div,
+}
+
 export const getGlobalActionsDom = (state: Pick<PanelState, 'maximized'>): readonly VirtualDomNode[] => {
   const { maximized } = state
   const maximizeLabel = maximized ? PanelStrings.unmaximize() : PanelStrings.maximize()
@@ -40,10 +46,6 @@ export const getGlobalActionsDom = (state: Pick<PanelState, 'maximized'>): reado
       title: PanelStrings.close(),
       type: VirtualDomElements.Button,
     },
-    {
-      childCount: 0,
-      className: mergeClassNames(ClassNames.MaskIcon, ClassNames.MaskIconClose),
-      type: VirtualDomElements.Div,
-    },
+    closeIconNode,
   ]
 }
