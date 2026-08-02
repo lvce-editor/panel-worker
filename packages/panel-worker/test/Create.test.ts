@@ -20,3 +20,21 @@ test('create should store state with the given uid', () => {
   expect(oldStateTyped.headerHeight).toBe(35)
   expect(oldStateTyped.maximized).toBe(false)
 })
+
+test('create should store the initial panel bounds', () => {
+  const uid = 124
+  Create.create(uid, '', 10, 20, 300, 400, 0, '')
+  const { newState, oldState } = PanelStates.get(uid)
+  expect(newState).toMatchObject({
+    height: 400,
+    width: 300,
+    x: 10,
+    y: 20,
+  })
+  expect(oldState).toMatchObject({
+    height: 400,
+    width: 300,
+    x: 10,
+    y: 20,
+  })
+})

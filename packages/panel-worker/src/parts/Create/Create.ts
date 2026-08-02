@@ -10,7 +10,7 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
     currentViewletId: '',
     errorCount: 0,
     headerHeight: 35,
-    height: 0,
+    height,
     initial: true,
     maximized: false,
     platform,
@@ -19,9 +19,9 @@ export const create = (uid: number, uri: string, x: number, y: number, width: nu
     uid,
     views: [],
     warningCount: 0,
-    width: 0,
-    x: 0,
-    y: 0,
+    width,
+    x,
+    y,
   }
   set(uid, state, state)
 }
