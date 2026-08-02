@@ -1,9 +1,13 @@
 import { expect, test } from '@jest/globals'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { saveState } from '../src/parts/SaveState/SaveState.ts'
 
-test('saveState should return persisted state with currentViewletId', () => {
+test('saveState should return persisted state with currentViewletId', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'SaveState.saveViewletStateWithStorageId': async () => {},
+  })
   const state: PanelState = {
     ...createDefaultState(),
     actionsUid: 11,
@@ -24,14 +28,18 @@ test('saveState should return persisted state with currentViewletId', () => {
     y: 20,
   }
 
-  const result = saveState(state)
+  const result = await saveState(state)
 
   expect(result).toEqual({
     currentViewletId: 'Output',
   })
+  expect(mockRpc.invocations).toEqual([['SaveState.saveViewletStateWithStorageId', 12, 'Output']])
 })
 
-test('saveState should not include unrelated state properties', () => {
+test('saveState should not include unrelated state properties', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'SaveState.saveViewletStateWithStorageId': async () => {},
+  })
   const state: PanelState = {
     ...createDefaultState(),
     actionsUid: 11,
@@ -52,16 +60,17 @@ test('saveState should not include unrelated state properties', () => {
     y: 20,
   }
 
-  const result = saveState(state)
+  const result = await saveState(state)
 
   expect(result).not.toHaveProperty('uid')
   expect(result).not.toHaveProperty('views')
   expect(result).not.toHaveProperty('selectedIndex')
   expect(result).not.toHaveProperty('x')
   expect(result).not.toHaveProperty('y')
+  expect(mockRpc.invocations).toEqual([['SaveState.saveViewletStateWithStorageId', 12, 'Problems']])
 })
 
-test('saveState should preserve empty currentViewletId value', () => {
+test('saveState should preserve empty currentViewletId value', async () => {
   const state: PanelState = {
     ...createDefaultState(),
     actionsUid: 11,
@@ -82,7 +91,7 @@ test('saveState should preserve empty currentViewletId value', () => {
     y: 20,
   }
 
-  const result = saveState(state)
+  const result = await saveState(state)
 
   expect(result).toEqual({
     currentViewletId: '',
