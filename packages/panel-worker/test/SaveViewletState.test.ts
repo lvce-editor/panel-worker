@@ -21,3 +21,22 @@ test('saveViewletState ignores an uninitialized panel child', async () => {
 
   expect(mockRpc.invocations).toEqual([])
 })
+
+test('saveViewletState supports renderers without the save command', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({})
+
+  await expect(saveViewletState(12, 'Problems')).resolves.toBeUndefined()
+
+  expect(mockRpc.invocations).toEqual([['SaveState.saveViewletStateWithStorageId', 12, 'Problems']])
+})
+
+test('saveViewletState propagates other renderer failures', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'SaveState.saveViewletStateWithStorageId': async () => {
+      throw new Error('storage unavailable')
+    },
+  })
+
+  await expect(saveViewletState(12, 'Problems')).rejects.toThrow('storage unavailable')
+  expect(mockRpc.invocations).toEqual([['SaveState.saveViewletStateWithStorageId', 12, 'Problems']])
+})
