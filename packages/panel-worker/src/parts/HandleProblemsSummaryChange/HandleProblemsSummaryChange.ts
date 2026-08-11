@@ -8,8 +8,9 @@ interface ProblemsSummary {
 }
 
 export const handleProblemsSummaryChange = (state: PanelState, summary: ProblemsSummary): PanelState => {
+  const { badgeCounts } = state
   const count = summary.hasEditor ? summary.problemCount : 0
-  if (state.badgeCounts[ViewletModuleId.Problems] === count) {
+  if (badgeCounts[ViewletModuleId.Problems] === count) {
     return state
   }
   return setBadgeCount(state, ViewletModuleId.Problems, count)
