@@ -6,9 +6,20 @@ import * as RendererProcess from '../src/parts/RendererProcess/RendererProcess.t
 
 test('connects the view directly to the renderer process', async () => {
   const queueCommands = jest.fn((_uid: number, _commands: readonly unknown[]) => 31)
+  const { promise: forwardedCommand, resolve: resolveForwardedCommand } = Promise.withResolvers<void>()
+  let forwardedCommandCount = 0
+  const forwardRendererWorkerCommand = jest.fn((_method: string) => {
+    forwardedCommandCount++
+    if (forwardedCommandCount === 3) {
+      resolveForwardedCommand()
+    }
+  })
   const { port1, port2 } = new MessageChannel()
   const rendererProcessRpc = await PlainMessagePortRpcParent.create({
-    commandMap: { 'Viewlet.queueCommands': queueCommands },
+    commandMap: {
+      'Viewlet.forwardRendererWorkerCommand': forwardRendererWorkerCommand,
+      'Viewlet.queueCommands': queueCommands,
+    },
     messagePort: port1,
   })
   const handleEvent = jest.fn(async (_uid: number, _value: string) => {})
@@ -27,17 +38,10 @@ test('connects the view directly to the renderer process', async () => {
   expect(queueCommands).toHaveBeenCalledWith(7, [['Viewlet.setDom2', 7, []]])
 
   const requestRender = jest.fn(async (_uid: number) => {})
-  const pendingLayoutCommand = new Promise<void>(() => {})
-  const hidePanel = jest.fn(() => pendingLayoutCommand)
-  const maximizePanel = jest.fn(() => pendingLayoutCommand)
-  const unmaximizePanel = jest.fn(() => pendingLayoutCommand)
   RendererWorker.set(
     Object.assign(
       createMockRpc({
         commandMap: {
-          'Layout.hidePanel': hidePanel,
-          'Layout.maximizePanel': maximizePanel,
-          'Layout.unmaximizePanel': unmaximizePanel,
           'Viewlet.requestRender': requestRender,
         },
       }),
@@ -51,9 +55,10 @@ test('connects the view directly to the renderer process', async () => {
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleClickClose')
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleClickMaximize')
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleClickUnmaximize')
-  expect(hidePanel).toHaveBeenCalledTimes(1)
-  expect(maximizePanel).toHaveBeenCalledTimes(1)
-  expect(unmaximizePanel).toHaveBeenCalledTimes(1)
+  await forwardedCommand
+  expect(forwardRendererWorkerCommand).toHaveBeenNthCalledWith(1, 'Layout.hidePanel')
+  expect(forwardRendererWorkerCommand).toHaveBeenNthCalledWith(2, 'Layout.maximizePanel')
+  expect(forwardRendererWorkerCommand).toHaveBeenNthCalledWith(3, 'Layout.unmaximizePanel')
   expect(handleClickClose).not.toHaveBeenCalled()
   expect(handleClickMaximize).not.toHaveBeenCalled()
   expect(handleClickUnmaximize).not.toHaveBeenCalled()

@@ -8,12 +8,18 @@ const layoutCommands: Readonly<Record<string, string>> = {
   handleClickUnmaximize: 'Layout.unmaximizePanel',
 }
 
+const forwardLayoutCommand = (layoutCommand: string): void => {
+  setTimeout(() => {
+    void RendererProcess.invoke('Viewlet.forwardRendererWorkerCommand', layoutCommand)
+  }, 0)
+}
+
 export const handleMessagePort = async (port: MessagePort, viewletCommandMap: Readonly<Record<string, unknown>>): Promise<void> => {
   const executeViewletCommand = async (uid: number, command: string, ...args: readonly any[]): Promise<void> => {
     const layoutCommand = layoutCommands[command]
     if (layoutCommand) {
-      // The layout command can resize this worker before it completes.
-      void RendererWorker.invoke(layoutCommand)
+      // Forward after this direct event returns so layout callbacks use an idle worker RPC.
+      forwardLayoutCommand(layoutCommand)
       return
     }
     const fn = viewletCommandMap[`Panel.${command}`]
