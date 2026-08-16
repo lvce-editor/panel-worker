@@ -12,7 +12,8 @@ export const handleMessagePort = async (port: MessagePort, viewletCommandMap: Re
   const executeViewletCommand = async (uid: number, command: string, ...args: readonly any[]): Promise<void> => {
     const layoutCommand = layoutCommands[command]
     if (layoutCommand) {
-      await RendererWorker.invoke(layoutCommand)
+      // The layout command can resize this worker before it completes.
+      void RendererWorker.invoke(layoutCommand)
       return
     }
     const fn = viewletCommandMap[`Panel.${command}`]

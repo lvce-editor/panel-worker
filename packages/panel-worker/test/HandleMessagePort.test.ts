@@ -27,9 +27,10 @@ test('connects the view directly to the renderer process', async () => {
   expect(queueCommands).toHaveBeenCalledWith(7, [['Viewlet.setDom2', 7, []]])
 
   const requestRender = jest.fn(async (_uid: number) => {})
-  const hidePanel = jest.fn(async () => {})
-  const maximizePanel = jest.fn(async () => {})
-  const unmaximizePanel = jest.fn(async () => {})
+  const pendingLayoutCommand = new Promise<void>(() => {})
+  const hidePanel = jest.fn(() => pendingLayoutCommand)
+  const maximizePanel = jest.fn(() => pendingLayoutCommand)
+  const unmaximizePanel = jest.fn(() => pendingLayoutCommand)
   RendererWorker.set(
     Object.assign(
       createMockRpc({
