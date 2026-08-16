@@ -100,6 +100,25 @@ test('diff2 should return RenderIncremental diff when assetDir changes', () => {
   expect(result).toEqual([DiffType.RenderIncremental])
 })
 
+test('diff2 should return RenderIncremental diff when badge counts change', () => {
+  const uid = 1005
+  const oldState: PanelState = {
+    ...createDefaultState(),
+    badgeCounts: { Problems: 3 },
+    uid,
+    views: ['Problems', 'Output'],
+  }
+  const newState: PanelState = {
+    ...oldState,
+    badgeCounts: { Problems: 2 },
+  }
+  PanelStates.set(uid, oldState, newState)
+
+  const result = Diff2.diff2(uid)
+
+  expect(result).toEqual([DiffType.RenderIncremental])
+})
+
 test('diff2 should return RenderIncremental and RenderChildUid when childUid changes', () => {
   const uid = 1003
   const oldState: PanelState = {
