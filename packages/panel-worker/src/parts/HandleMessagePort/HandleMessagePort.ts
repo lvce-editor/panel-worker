@@ -2,12 +2,17 @@ import { PlainMessagePortRpc } from '@lvce-editor/rpc'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import * as RendererProcess from '../RendererProcess/RendererProcess.ts'
 
-const rendererWorkerCommands = new Set(['handleClickClose', 'handleClickMaximize', 'handleClickUnmaximize'])
+const layoutCommands: Readonly<Record<string, string>> = {
+  handleClickClose: 'Layout.hidePanel',
+  handleClickMaximize: 'Layout.maximizePanel',
+  handleClickUnmaximize: 'Layout.unmaximizePanel',
+}
 
 export const handleMessagePort = async (port: MessagePort, viewletCommandMap: Readonly<Record<string, unknown>>): Promise<void> => {
   const executeViewletCommand = async (uid: number, command: string, ...args: readonly any[]): Promise<void> => {
-    if (rendererWorkerCommands.has(command)) {
-      await RendererWorker.invoke('Viewlet.executeViewletCommand', uid, command, ...args)
+    const layoutCommand = layoutCommands[command]
+    if (layoutCommand) {
+      await RendererWorker.invoke(layoutCommand)
       return
     }
     const fn = viewletCommandMap[`Panel.${command}`]
