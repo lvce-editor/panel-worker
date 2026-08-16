@@ -12,8 +12,14 @@ test('connects the view directly to the renderer process', async () => {
     messagePort: port1,
   })
   const handleEvent = jest.fn(async (_uid: number, _value: string) => {})
+  const handleClickClose = jest.fn(async (_uid: number) => {})
+  const handleClickMaximize = jest.fn(async (_uid: number) => {})
+  const handleClickUnmaximize = jest.fn(async (_uid: number) => {})
 
   await handleMessagePort(port2, {
+    'Panel.handleClickClose': handleClickClose,
+    'Panel.handleClickMaximize': handleClickMaximize,
+    'Panel.handleClickUnmaximize': handleClickUnmaximize,
     'Panel.handleEvent': handleEvent,
   })
   expect(RendererProcess.isConnected()).toBe(true)
@@ -21,10 +27,12 @@ test('connects the view directly to the renderer process', async () => {
   expect(queueCommands).toHaveBeenCalledWith(7, [['Viewlet.setDom2', 7, []]])
 
   const requestRender = jest.fn(async (_uid: number) => {})
+  const executeViewletCommand = jest.fn(async (_uid: number, _command: string, ..._args: readonly unknown[]) => {})
   RendererWorker.set(
     Object.assign(
       createMockRpc({
         commandMap: {
+          'Viewlet.executeViewletCommand': executeViewletCommand,
           'Viewlet.requestRender': requestRender,
         },
       }),
@@ -34,6 +42,18 @@ test('connects the view directly to the renderer process', async () => {
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleEvent', 'hello')
   expect(handleEvent).toHaveBeenCalledWith(7, 'hello')
   expect(requestRender).toHaveBeenCalledWith(7)
+
+  await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleClickClose')
+  await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleClickMaximize')
+  await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleClickUnmaximize')
+  expect(executeViewletCommand).toHaveBeenCalledWith(7, 'handleClickClose')
+  expect(executeViewletCommand).toHaveBeenCalledWith(7, 'handleClickMaximize')
+  expect(executeViewletCommand).toHaveBeenCalledWith(7, 'handleClickUnmaximize')
+  expect(handleClickClose).not.toHaveBeenCalled()
+  expect(handleClickMaximize).not.toHaveBeenCalled()
+  expect(handleClickUnmaximize).not.toHaveBeenCalled()
+  expect(requestRender).toHaveBeenCalledTimes(1)
+
   await expect(rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'missing')).rejects.toThrow('Viewlet command not found: missing')
 
   await RendererProcessRegistry.dispose()
