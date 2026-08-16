@@ -11,6 +11,8 @@ import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import { selectName } from '../SelectName/SelectName.ts'
 
+const handleDirectMessagePort = (port: MessagePort): Promise<void> => handleMessagePort(port, commandMap)
+
 export const commandMap = {
   'Panel.create': Panel.create,
   'Panel.diff2': diff2,
@@ -20,7 +22,7 @@ export const commandMap = {
   'Panel.handleClickMaximize': wrapCommand(LoadContent.handleClickMaximize),
   'Panel.handleClickUnmaximize': wrapCommand(LoadContent.handleClickUnmaximize),
   'Panel.handleFilterInput': wrapCommand(LoadContent.handleFilterInput),
-  'Panel.handleMessagePort': handleMessagePort,
+  'Panel.handleMessagePort': handleDirectMessagePort,
   'Panel.handlePanelLayoutChanged': wrapCommand(LoadContent.handlePanelLayoutChanged),
   'Panel.handleProblemsSummaryChange': wrapCommand(handleProblemsSummaryChange),
   'Panel.loadContent': wrapCommand(LoadContent.loadContent),
