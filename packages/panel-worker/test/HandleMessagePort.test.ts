@@ -27,12 +27,16 @@ test('connects the view directly to the renderer process', async () => {
   expect(queueCommands).toHaveBeenCalledWith(7, [['Viewlet.setDom2', 7, []]])
 
   const requestRender = jest.fn(async (_uid: number) => {})
-  const executeViewletCommand = jest.fn(async (_uid: number, _command: string, ..._args: readonly unknown[]) => {})
+  const hidePanel = jest.fn(async () => {})
+  const maximizePanel = jest.fn(async () => {})
+  const unmaximizePanel = jest.fn(async () => {})
   RendererWorker.set(
     Object.assign(
       createMockRpc({
         commandMap: {
-          'Viewlet.executeViewletCommand': executeViewletCommand,
+          'Layout.hidePanel': hidePanel,
+          'Layout.maximizePanel': maximizePanel,
+          'Layout.unmaximizePanel': unmaximizePanel,
           'Viewlet.requestRender': requestRender,
         },
       }),
@@ -46,9 +50,9 @@ test('connects the view directly to the renderer process', async () => {
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleClickClose')
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleClickMaximize')
   await rendererProcessRpc.invoke('Viewlet.executeViewletCommand', 7, 'handleClickUnmaximize')
-  expect(executeViewletCommand).toHaveBeenCalledWith(7, 'handleClickClose')
-  expect(executeViewletCommand).toHaveBeenCalledWith(7, 'handleClickMaximize')
-  expect(executeViewletCommand).toHaveBeenCalledWith(7, 'handleClickUnmaximize')
+  expect(hidePanel).toHaveBeenCalledTimes(1)
+  expect(maximizePanel).toHaveBeenCalledTimes(1)
+  expect(unmaximizePanel).toHaveBeenCalledTimes(1)
   expect(handleClickClose).not.toHaveBeenCalled()
   expect(handleClickMaximize).not.toHaveBeenCalled()
   expect(handleClickUnmaximize).not.toHaveBeenCalled()
