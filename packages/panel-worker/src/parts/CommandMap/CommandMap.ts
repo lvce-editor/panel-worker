@@ -11,7 +11,8 @@ import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import { selectName } from '../SelectName/SelectName.ts'
 
-const handleDirectMessagePort = (port: MessagePort): Promise<void> => handleMessagePort(port, commandMap)
+const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess = true): Promise<void> =>
+  handleMessagePort(port, commandMap, setAsRendererProcess)
 
 export const commandMap = {
   'Panel.create': Panel.create,
