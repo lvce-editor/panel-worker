@@ -1,6 +1,7 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
 import * as Panel from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
+import { getCurrentViewletId } from '../GetCurrentViewletId/GetCurrentViewletId.ts'
 import { handleMessagePort } from '../HandleMessagePort/HandleMessagePort.ts'
 import { handleProblemsSummaryChange } from '../HandleProblemsSummaryChange/HandleProblemsSummaryChange.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
@@ -18,6 +19,7 @@ export const commandMap = {
   'Panel.create': Panel.create,
   'Panel.diff2': diff2,
   'Panel.getCommandIds': getCommandIds,
+  'Panel.getCurrentViewletId': wrapGetter(getCurrentViewletId),
   'Panel.handleBlur': wrapCommand(LoadContent.handleBlur),
   'Panel.handleClickClose': wrapCommand(LoadContent.handleClickClose),
   'Panel.handleClickMaximize': wrapCommand(LoadContent.handleClickMaximize),
