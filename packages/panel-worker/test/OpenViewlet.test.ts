@@ -7,6 +7,7 @@ test('openViewlet saves the active child before creating its replacement', async
   using mockRpc = RendererWorker.registerMockRpc({
     'Layout.createPanelViewlet': async () => {},
     'SaveState.saveViewletStateWithStorageId': async () => {},
+    'Viewlet.dispose': async () => {},
   })
   const random = jest.spyOn(Math, 'random').mockReturnValue(42)
   const state = {
@@ -27,6 +28,22 @@ test('openViewlet saves the active child before creating its replacement', async
   expect(mockRpc.invocations[0]).toEqual(['SaveState.saveViewletStateWithStorageId', 12, 'Problems'])
   expect(mockRpc.invocations[1][0]).toBe('Layout.createPanelViewlet')
   expect(mockRpc.invocations[1][1]).toBe('Output')
+  expect(mockRpc.invocations[2]).toEqual(['Viewlet.dispose', 12])
+})
+
+test('openViewlet does not dispose a missing active child', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.createPanelViewlet': async () => {},
+  })
+  const state = {
+    ...createDefaultState(),
+    views: ['Problems'],
+  }
+
+  await openViewlet(state, 'Problems')
+
+  expect(mockRpc.invocations).toHaveLength(1)
+  expect(mockRpc.invocations[0][0]).toBe('Layout.createPanelViewlet')
 })
 
 test('openViewlet ignores views that are not available', async () => {

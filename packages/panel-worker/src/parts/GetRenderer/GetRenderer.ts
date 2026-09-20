@@ -1,7 +1,6 @@
 import type { Renderer } from '../Renderer/Renderer.ts'
 import * as DiffType from '../DiffType/DiffType.ts'
 import { renderActionsUid } from '../RenderActionsUid/RenderActionsUid.ts'
-import { renderChildUid } from '../RenderChildUid/RenderChildUid.ts'
 import { renderIncremental } from '../RenderIncremental/RenderIncremental.ts'
 import * as RenderItems from '../RenderItems/RenderItems.ts'
 
@@ -9,8 +8,6 @@ export const getRenderer = (diffType: number): Renderer => {
   switch (diffType) {
     case DiffType.RenderActionsUid:
       return renderActionsUid
-    case DiffType.RenderChildUid:
-      return renderChildUid
     case DiffType.RenderIncremental:
       return renderIncremental
     case DiffType.RenderItems:

@@ -17,6 +17,7 @@ test('loadContent falls back to Problems when restoring Ports in a local workspa
   using mockRpc = RendererWorker.registerMockRpc({
     'Layout.createPanelViewlet': async () => {},
     'SaveState.saveViewletStateWithStorageId': async () => {},
+    'Viewlet.dispose': async () => {},
   })
   const random = jest.spyOn(Math, 'random').mockReturnValue(42)
 
@@ -38,6 +39,7 @@ test('loadContent preserves Ports in a remote ssh workspace', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'Layout.createPanelViewlet': async () => {},
     'SaveState.saveViewletStateWithStorageId': async () => {},
+    'Viewlet.dispose': async () => {},
   })
   const random = jest.spyOn(Math, 'random').mockReturnValue(42)
 

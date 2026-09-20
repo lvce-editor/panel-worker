@@ -1,4 +1,5 @@
 import type { PanelState } from '../PanelState/PanelState.ts'
+import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createViewlet } from '../CreateViewlet/CreateViewlet.ts'
 import * as GetContentDimensions from '../GetContentDimensions/GetContentDimensions.ts'
 import * as GetUid from '../GetUid/GetUid.ts'
@@ -16,6 +17,9 @@ export const openViewlet = async (state: PanelState, id: string, focus = false, 
   const actionsUid = GetUid.getUid()
   const index = views.indexOf(id)
   await createViewlet(id, childUid, tabId, actionsUid, childDimensions, uri, focus)
+  if (currentChildUid > 0) {
+    await RendererWorker.invoke('Viewlet.dispose', currentChildUid)
+  }
   return {
     ...state,
     actionsUid,
