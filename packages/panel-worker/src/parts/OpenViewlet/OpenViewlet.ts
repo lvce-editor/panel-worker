@@ -1,5 +1,5 @@
-import type { PanelState } from '../PanelState/PanelState.ts'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { PanelState } from '../PanelState/PanelState.ts'
 import { createViewlet } from '../CreateViewlet/CreateViewlet.ts'
 import * as GetContentDimensions from '../GetContentDimensions/GetContentDimensions.ts'
 import * as GetUid from '../GetUid/GetUid.ts'
