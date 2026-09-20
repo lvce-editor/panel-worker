@@ -6,6 +6,9 @@ import * as SaveViewletState from '../SaveViewletState/SaveViewletState.ts'
 
 export const openViewlet = async (state: PanelState, id: string, focus = false, uri = ''): Promise<PanelState> => {
   const { childUid: currentChildUid, currentViewletId, views } = state
+  if (!views.includes(id)) {
+    return state
+  }
   await SaveViewletState.saveViewletState(currentChildUid, currentViewletId)
   const childDimensions = GetContentDimensions.getContentDimensions(state)
   const childUid = GetUid.getUid()

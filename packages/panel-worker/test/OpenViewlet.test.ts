@@ -28,3 +28,20 @@ test('openViewlet saves the active child before creating its replacement', async
   expect(mockRpc.invocations[1][0]).toBe('Layout.createPanelViewlet')
   expect(mockRpc.invocations[1][1]).toBe('Output')
 })
+
+test('openViewlet ignores views that are not available', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.createPanelViewlet': async () => {},
+    'SaveState.saveViewletStateWithStorageId': async () => {},
+  })
+  const state = {
+    ...createDefaultState(),
+    currentViewletId: 'Problems',
+    views: ['Problems', 'Output'],
+  }
+
+  const result = await openViewlet(state, 'Ports')
+
+  expect(result).toBe(state)
+  expect(mockRpc.invocations).toEqual([])
+})

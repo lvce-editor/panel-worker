@@ -29,3 +29,18 @@ test('selectIndex focuses the selected panel view with the requested uri', async
   })
   randomSpy.mockRestore()
 })
+
+test('selectIndex ignores an unavailable index', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.createPanelViewlet': async () => {},
+  })
+  const state = {
+    ...createDefaultState(),
+    views: ['Problems', 'Terminals'],
+  }
+
+  const result = await SelectIndex.selectIndex(state, 2)
+
+  expect(result).toBe(state)
+  expect(mockRpc.invocations).toEqual([])
+})
