@@ -119,7 +119,7 @@ test('diff2 should return RenderIncremental diff when badge counts change', () =
   expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff2 should return RenderIncremental and RenderChildUid when childUid changes', () => {
+test('diff2 should not render a child disposal when childUid changes', () => {
   const uid = 1003
   const oldState: PanelState = {
     ...createDefaultState(),
@@ -163,7 +163,7 @@ test('diff2 should return RenderIncremental and RenderChildUid when childUid cha
 
   const result = Diff2.diff2(uid)
 
-  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderChildUid])
+  expect(result).toEqual([DiffType.RenderIncremental])
 })
 
 test('diff2 should return RenderIncremental and RenderActionsUid when actionsUid changes', () => {
