@@ -56,3 +56,27 @@ test('loadContent preserves Ports in a remote ssh workspace', async () => {
   }
   expect(mockRpc.invocations).toContainEqual(['Layout.createPanelViewlet', 'Ports', 42, 42, 42, expect.any(Object), '', false])
 })
+
+test('loadContent restores hidden panel views and selects a visible view', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.createPanelViewlet': async () => {},
+    'SaveState.saveViewletStateWithStorageId': async () => {},
+    'Viewlet.dispose': async () => {},
+  })
+  const random = jest.spyOn(Math, 'random').mockReturnValue(42)
+
+  try {
+    const result = await loadContent(createState(), { currentViewletId: 'Output', hiddenViews: ['Problems', 'Output'] }, 'file:///workspace')
+
+    expect(result).toMatchObject({
+      availableViews: ['Problems', 'Output', 'Debug Console', 'Terminals'],
+      currentViewletId: 'Debug Console',
+      hiddenViews: ['Problems', 'Output'],
+      selectedIndex: 0,
+      views: ['Debug Console', 'Terminals'],
+    })
+  } finally {
+    random.mockRestore()
+  }
+  expect(mockRpc.invocations).toContainEqual(['Layout.createPanelViewlet', 'Debug Console', 42, 42, 42, expect.any(Object), '', false])
+})

@@ -4,7 +4,7 @@ import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { saveState } from '../src/parts/SaveState/SaveState.ts'
 
-test('saveState should return persisted state with currentViewletId', async () => {
+test('saveState should return persisted state with currentViewletId and hidden views', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
     'SaveState.saveViewletStateWithStorageId': async () => {},
   })
@@ -17,6 +17,7 @@ test('saveState should return persisted state with currentViewletId', async () =
     currentViewletId: 'Output',
     errorCount: 1,
     height: 200,
+    hiddenViews: ['Problems'],
     initial: false,
     platform: 2,
     selectedIndex: 0,
@@ -32,6 +33,7 @@ test('saveState should return persisted state with currentViewletId', async () =
 
   expect(result).toEqual({
     currentViewletId: 'Output',
+    hiddenViews: ['Problems'],
   })
   expect(mockRpc.invocations).toEqual([['SaveState.saveViewletStateWithStorageId', 12, 'Output']])
 })
@@ -95,5 +97,6 @@ test('saveState should preserve empty currentViewletId value', async () => {
 
   expect(result).toEqual({
     currentViewletId: '',
+    hiddenViews: [],
   })
 })

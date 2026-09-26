@@ -3,8 +3,11 @@ import * as Panel from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
 import { getComponentState } from '../GetComponentState/GetComponentState.ts'
 import { getCurrentViewletId } from '../GetCurrentViewletId/GetCurrentViewletId.ts'
+import { getMenuEntries } from '../GetMenuEntries/GetMenuEntries.ts'
+import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
 import { handleMessagePort } from '../HandleMessagePort/HandleMessagePort.ts'
 import { handleProblemsSummaryChange } from '../HandleProblemsSummaryChange/HandleProblemsSummaryChange.ts'
+import { handleTabContextMenu } from '../HandleTabContextMenu/HandleTabContextMenu.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../PanelStates/PanelStates.ts'
 import { render2 } from '../Render2/Render2.ts'
@@ -13,6 +16,7 @@ import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import { selectName } from '../SelectName/SelectName.ts'
 import { setComponentState } from '../SetComponentState/SetComponentState.ts'
+import { toggleViewVisibility } from '../ToggleViewVisibility/ToggleViewVisibility.ts'
 
 const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess = true): Promise<void> =>
   handleMessagePort(port, commandMap, setAsRendererProcess)
@@ -23,6 +27,9 @@ export const commandMap = {
   'Panel.getCommandIds': getCommandIds,
   'Panel.getComponentState': getComponentState,
   'Panel.getCurrentViewletId': wrapGetter(getCurrentViewletId),
+  'Panel.getMenuEntries': wrapGetter(getMenuEntries),
+  'Panel.getMenuEntries2': wrapGetter(getMenuEntries),
+  'Panel.getMenuIds': getMenuIds,
   'Panel.handleBlur': wrapCommand(LoadContent.handleBlur),
   'Panel.handleClickClose': wrapCommand(LoadContent.handleClickClose),
   'Panel.handleClickMaximize': wrapCommand(LoadContent.handleClickMaximize),
@@ -31,6 +38,7 @@ export const commandMap = {
   'Panel.handleMessagePort': handleDirectMessagePort,
   'Panel.handlePanelLayoutChanged': wrapCommand(LoadContent.handlePanelLayoutChanged),
   'Panel.handleProblemsSummaryChange': wrapCommand(handleProblemsSummaryChange),
+  'Panel.handleTabContextMenu': wrapCommand(handleTabContextMenu),
   'Panel.loadContent': wrapCommand(LoadContent.loadContent),
   'Panel.openViewlet': wrapCommand(LoadContent.openViewlet),
   'Panel.render2': render2,
@@ -44,4 +52,5 @@ export const commandMap = {
   'Panel.setComponentState': setComponentState,
   'Panel.terminate': terminate,
   'Panel.toggleView': wrapCommand(LoadContent.toggleView),
+  'Panel.toggleViewVisibility': wrapCommand(toggleViewVisibility),
 }
