@@ -1,12 +1,12 @@
-import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { PanelState } from '../PanelState/PanelState.ts'
 import { createViewlet } from '../CreateViewlet/CreateViewlet.ts'
 import * as GetContentDimensions from '../GetContentDimensions/GetContentDimensions.ts'
 import * as GetUid from '../GetUid/GetUid.ts'
+import * as PendingDisposals from '../PendingDisposals/PendingDisposals.ts'
 import * as SaveViewletState from '../SaveViewletState/SaveViewletState.ts'
 
 export const openViewlet = async (state: PanelState, id: string, focus = false, uri = ''): Promise<PanelState> => {
-  const { childUid: currentChildUid, currentViewletId, views } = state
+  const { childUid: currentChildUid, currentViewletId, uid, views } = state
   if (!views.includes(id)) {
     return state
   }
@@ -18,7 +18,7 @@ export const openViewlet = async (state: PanelState, id: string, focus = false, 
   const index = views.indexOf(id)
   await createViewlet(id, childUid, tabId, actionsUid, childDimensions, uri, focus)
   if (currentChildUid > 0) {
-    await RendererWorker.invoke('Viewlet.dispose', currentChildUid)
+    PendingDisposals.add(uid, currentChildUid)
   }
   return {
     ...state,

@@ -2,6 +2,7 @@ import { expect, jest, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { openViewlet } from '../src/parts/OpenViewlet/OpenViewlet.ts'
+import * as PendingDisposals from '../src/parts/PendingDisposals/PendingDisposals.ts'
 
 test('openViewlet saves the active child before creating its replacement', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
@@ -28,7 +29,9 @@ test('openViewlet saves the active child before creating its replacement', async
   expect(mockRpc.invocations[0]).toEqual(['SaveState.saveViewletStateWithStorageId', 12, 'Problems'])
   expect(mockRpc.invocations[1][0]).toBe('Layout.createPanelViewlet')
   expect(mockRpc.invocations[1][1]).toBe('Output')
-  expect(mockRpc.invocations[2]).toEqual(['Viewlet.dispose', 12])
+  expect(mockRpc.invocations).toHaveLength(2)
+  const { uid } = state
+  expect(PendingDisposals.take(uid)).toEqual([12])
 })
 
 test('openViewlet does not dispose a missing active child', async () => {
