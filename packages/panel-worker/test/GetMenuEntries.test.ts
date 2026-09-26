@@ -21,7 +21,7 @@ test('getMenuEntries returns panel tab context menu entries', () => {
 
   expect(result).toHaveLength(7)
   expect(result[0]).toEqual({
-    args: ['Problems'],
+    args: [0, 'Problems'],
     command: 'Panel.toggleViewVisibility',
     flags: MenuItemFlags.Checked,
     id: 'panelTab.Problems',

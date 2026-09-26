@@ -10,8 +10,9 @@ const getViewMenuItemFlags = (state: PanelState, view: string): number => {
 }
 
 const getViewMenuEntry = (state: PanelState, view: string): MenuEntry => {
+  const { uid } = state
   return {
-    args: [view],
+    args: [uid, view],
     command: 'Panel.toggleViewVisibility',
     flags: getViewMenuItemFlags(state, view),
     id: `panelTab.${view}`,
