@@ -40,8 +40,8 @@ export const commandMap = {
   'Panel.selectIndex': wrapCommand(LoadContent.selectIndex),
   'Panel.selectIndexRaw': wrapCommand(LoadContent.selectRaw),
   'Panel.selectName': wrapCommand(selectName),
-  'Panel.setComponentState': setComponentState,
   'Panel.setBadgeCount': wrapCommand(LoadContent.setBadgeCount),
+  'Panel.setComponentState': setComponentState,
   'Panel.terminate': terminate,
   'Panel.toggleView': wrapCommand(LoadContent.toggleView),
 }
