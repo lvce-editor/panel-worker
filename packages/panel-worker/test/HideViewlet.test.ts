@@ -4,10 +4,10 @@ import { hideViewlet } from '../src/parts/HideViewlet/HideViewlet.ts'
 
 test('hideViewlet supports older renderers without Viewlet.hide', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
+    'Viewlet.dispose': async () => {},
     'Viewlet.hide': async () => {
       throw new Error('command Viewlet.hide not found')
     },
-    'Viewlet.dispose': async () => {},
   })
   expect(await hideViewlet(12)).toEqual([])
   expect(mockRpc.invocations).toEqual([

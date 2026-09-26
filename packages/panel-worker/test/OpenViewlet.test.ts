@@ -30,7 +30,8 @@ test('openViewlet saves the active child before creating its replacement', async
   expect(mockRpc.invocations[1][0]).toBe('Layout.createPanelViewlet')
   expect(mockRpc.invocations[1][1]).toBe('Output')
   expect(mockRpc.invocations).toHaveLength(2)
-  expect(PendingDisposals.take(state.uid)).toEqual([12])
+  const { uid } = state
+  expect(PendingDisposals.take(uid)).toEqual([12])
 })
 
 test('openViewlet does not dispose a missing active child', async () => {
