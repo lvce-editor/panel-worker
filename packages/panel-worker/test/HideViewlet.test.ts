@@ -25,3 +25,15 @@ test('hideViewlet propagates cleanup failures without retrying disposal', async 
   await expect(hideViewlet(12)).rejects.toThrow('worker cleanup failed')
   expect(mockRpc.invocations).toEqual([['Viewlet.hide', 12]])
 })
+
+test('hideViewlet falls back when an older renderer ignores an unknown command', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Viewlet.dispose': async () => {},
+    'Viewlet.hide': async () => {},
+  })
+  expect(await hideViewlet(12)).toEqual([])
+  expect(mockRpc.invocations).toEqual([
+    ['Viewlet.hide', 12],
+    ['Viewlet.dispose', 12, true],
+  ])
+})
