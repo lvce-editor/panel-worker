@@ -1,8 +1,9 @@
-import type { Test } from '@lvce-editor/test-with-playwright'
+import type { Test } from '@lvce-editor/test-worker'
+import type { TestContext } from './_TestContext.ts'
 
 export const name = 'panel.tabs-displayed'
 
-export const test: Test = async ({ expect, Locator, Panel }) => {
+export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
   // Act
   await Panel.openProblems()
 
@@ -17,4 +18,6 @@ export const test: Test = async ({ expect, Locator, Panel }) => {
   await expect(tabDebugConsole).toBeVisible()
   const tabTerminals = Locator('.PanelTab[name="Terminals"]')
   await expect(tabTerminals).toBeVisible()
+  const tabPorts = Locator('.PanelTab[name="Ports"]')
+  await expect(tabPorts).toHaveCount(0)
 }

@@ -1,5 +1,6 @@
 export const HandleClickClose = 'handleClickClose'
 export const HandleClickMaximize = 'handleClickMaximize'
+export const HandleClickUnmaximize = 'handleClickUnmaximize'
 export const HandleClickSelectTab = 'HandleClickSelectTab'
 export const HandleClickTab = 'HandleClickTab'
 export const HandleTabContextMenu = 'HandleTabContextMenu'

@@ -1,18 +1,18 @@
 import { MenuEntryId, MenuItemFlags } from '@lvce-editor/constants'
 import type { ContextMenuProps } from '../ContextMenuProps/ContextMenuProps.ts'
 import type { MenuEntry } from '../MenuEntry/MenuEntry.ts'
-import * as MenuEntrySeparator from '../MenuEntrySeparator/MenuEntrySeparator.ts'
 import type { PanelState } from '../PanelState/PanelState.ts'
-import * as ViewletModuleId from '../ViewletModuleId/ViewletModuleId.ts'
+import * as MenuEntrySeparator from '../MenuEntrySeparator/MenuEntrySeparator.ts'
 
 const getViewMenuItemFlags = (state: PanelState, view: string): number => {
-  return state.currentViewletId === view ? MenuItemFlags.Checked : MenuItemFlags.Unchecked
+  const { views } = state
+  return views.includes(view) ? MenuItemFlags.Checked : MenuItemFlags.Unchecked
 }
 
 const getViewMenuEntry = (state: PanelState, view: string): MenuEntry => {
   return {
     args: [view],
-    command: 'Panel.selectName',
+    command: 'Panel.toggleViewVisibility',
     flags: getViewMenuItemFlags(state, view),
     id: `panelTab.${view}`,
     label: view,
@@ -20,11 +20,9 @@ const getViewMenuEntry = (state: PanelState, view: string): MenuEntry => {
 }
 
 const getTabMenuEntries = (state: PanelState): readonly MenuEntry[] => {
+  const { availableViews } = state
   return [
-    getViewMenuEntry(state, ViewletModuleId.Problems),
-    getViewMenuEntry(state, ViewletModuleId.Output),
-    getViewMenuEntry(state, ViewletModuleId.DebugConsole),
-    getViewMenuEntry(state, ViewletModuleId.Terminals),
+    ...availableViews.map((view) => getViewMenuEntry(state, view)),
     MenuEntrySeparator.menuEntrySeparator,
     {
       command: 'Layout.maximizePanel',

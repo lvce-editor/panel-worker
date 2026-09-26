@@ -1,17 +1,23 @@
-import type { Test } from '@lvce-editor/test-with-playwright'
+import type { Test } from '@lvce-editor/test-worker'
+import type { TestContext } from './_TestContext.ts'
 
 export const name = 'panel.maximize'
 
 export const skip = 1
 
-export const test: Test = async ({ Command, expect, Locator, Panel }) => {
+export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
   // Arrange
+  const panel = Locator('.Panel')
+  const maximizeButton = Locator('[aria-label="Maximize"]')
+  const unmaximizeButton = Locator('[aria-label="Unmaximize"]')
   await Panel.openProblems()
-  await expect(Locator('.Panel')).toBeVisible()
+  await expect(panel).toBeVisible()
 
   // Act
-  await Command.execute('Layout.maximizePanel')
+  await Panel.maximize()
 
   // Assert
-  await expect(Locator('.Panel')).toBeVisible()
+  await expect(panel).toBeVisible()
+  await expect(unmaximizeButton).toBeVisible()
+  await expect(maximizeButton).toBeHidden()
 }

@@ -3,13 +3,16 @@ import type { Tab } from '../Tab/Tab.ts'
 export interface PanelState {
   readonly actionsUid: number
   readonly assetDir: string
-  readonly badgeCounts: any
+  readonly availableViews: readonly string[]
+  readonly badgeCounts: Readonly<Record<string, number>>
   readonly childUid: number
   readonly currentViewletId: string
   readonly errorCount: number
   readonly headerHeight: number
   readonly height: number
+  readonly hiddenViews: readonly string[]
   readonly initial: boolean
+  readonly maximized: boolean
   readonly platform: number
   readonly selectedIndex: number
   readonly tabs: readonly Tab[]

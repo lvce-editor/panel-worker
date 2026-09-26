@@ -1,9 +1,9 @@
 import { expect, test } from '@jest/globals'
 import { MenuEntryId } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
+import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { handleTabContextMenu } from '../src/parts/HandleTabContextMenu/HandleTabContextMenu.ts'
-import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 
 test('handleTabContextMenu shows the tab context menu', async () => {
   const state: PanelState = {

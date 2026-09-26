@@ -1,8 +1,12 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
 import * as Panel from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
+import { getComponentState } from '../GetComponentState/GetComponentState.ts'
+import { getCurrentViewletId } from '../GetCurrentViewletId/GetCurrentViewletId.ts'
 import { getMenuEntries } from '../GetMenuEntries/GetMenuEntries.ts'
 import { getMenuIds } from '../GetMenuIds/GetMenuIds.ts'
+import { handleMessagePort } from '../HandleMessagePort/HandleMessagePort.ts'
+import { handleProblemsSummaryChange } from '../HandleProblemsSummaryChange/HandleProblemsSummaryChange.ts'
 import { handleTabContextMenu } from '../HandleTabContextMenu/HandleTabContextMenu.ts'
 import * as LoadContent from '../LoadContent/LoadContent.ts'
 import { getCommandIds, wrapCommand, wrapGetter } from '../PanelStates/PanelStates.ts'
@@ -11,18 +15,29 @@ import { renderEventListeners } from '../RenderEventListeners/RenderEventListene
 import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import { selectName } from '../SelectName/SelectName.ts'
+import { setComponentState } from '../SetComponentState/SetComponentState.ts'
+import { toggleViewVisibility } from '../ToggleViewVisibility/ToggleViewVisibility.ts'
+
+const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess = true): Promise<void> =>
+  handleMessagePort(port, commandMap, setAsRendererProcess)
 
 export const commandMap = {
   'Panel.create': Panel.create,
   'Panel.diff2': diff2,
   'Panel.getCommandIds': getCommandIds,
+  'Panel.getComponentState': getComponentState,
+  'Panel.getCurrentViewletId': wrapGetter(getCurrentViewletId),
   'Panel.getMenuEntries': wrapGetter(getMenuEntries),
   'Panel.getMenuEntries2': wrapGetter(getMenuEntries),
   'Panel.getMenuIds': getMenuIds,
   'Panel.handleBlur': wrapCommand(LoadContent.handleBlur),
   'Panel.handleClickClose': wrapCommand(LoadContent.handleClickClose),
   'Panel.handleClickMaximize': wrapCommand(LoadContent.handleClickMaximize),
+  'Panel.handleClickUnmaximize': wrapCommand(LoadContent.handleClickUnmaximize),
   'Panel.handleFilterInput': wrapCommand(LoadContent.handleFilterInput),
+  'Panel.handleMessagePort': handleDirectMessagePort,
+  'Panel.handlePanelLayoutChanged': wrapCommand(LoadContent.handlePanelLayoutChanged),
+  'Panel.handleProblemsSummaryChange': wrapCommand(handleProblemsSummaryChange),
   'Panel.handleTabContextMenu': wrapCommand(handleTabContextMenu),
   'Panel.loadContent': wrapCommand(LoadContent.loadContent),
   'Panel.openViewlet': wrapCommand(LoadContent.openViewlet),
@@ -34,6 +49,8 @@ export const commandMap = {
   'Panel.selectIndexRaw': wrapCommand(LoadContent.selectRaw),
   'Panel.selectName': wrapCommand(selectName),
   'Panel.setBadgeCount': wrapCommand(LoadContent.setBadgeCount),
+  'Panel.setComponentState': setComponentState,
   'Panel.terminate': terminate,
   'Panel.toggleView': wrapCommand(LoadContent.toggleView),
+  'Panel.toggleViewVisibility': wrapCommand(toggleViewVisibility),
 }

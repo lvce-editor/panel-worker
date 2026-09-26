@@ -100,7 +100,26 @@ test('diff2 should return RenderIncremental diff when assetDir changes', () => {
   expect(result).toEqual([DiffType.RenderIncremental])
 })
 
-test('diff2 should return RenderIncremental and RenderChildUid when childUid changes', () => {
+test('diff2 should return RenderIncremental diff when badge counts change', () => {
+  const uid = 1005
+  const oldState: PanelState = {
+    ...createDefaultState(),
+    badgeCounts: { Problems: 3 },
+    uid,
+    views: ['Problems', 'Output'],
+  }
+  const newState: PanelState = {
+    ...oldState,
+    badgeCounts: { Problems: 2 },
+  }
+  PanelStates.set(uid, oldState, newState)
+
+  const result = Diff2.diff2(uid)
+
+  expect(result).toEqual([DiffType.RenderIncremental])
+})
+
+test('diff2 should not render a child disposal when childUid changes', () => {
   const uid = 1003
   const oldState: PanelState = {
     ...createDefaultState(),
@@ -144,5 +163,52 @@ test('diff2 should return RenderIncremental and RenderChildUid when childUid cha
 
   const result = Diff2.diff2(uid)
 
-  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderChildUid])
+  expect(result).toEqual([DiffType.RenderIncremental])
+})
+
+test('diff2 should return RenderIncremental and RenderActionsUid when actionsUid changes', () => {
+  const uid = 1004
+  const oldState: PanelState = {
+    ...createDefaultState(),
+    actionsUid: 7,
+    assetDir: '/same-dir',
+    badgeCounts: {},
+    childUid: 8,
+    currentViewletId: '',
+    errorCount: 0,
+    height: 200,
+    initial: false,
+    platform: 0,
+    selectedIndex: 0,
+    uid,
+    views: ['PROBLEMS'],
+    warningCount: 0,
+    width: 300,
+    x: 0,
+    y: 0,
+  }
+  const newState: PanelState = {
+    ...createDefaultState(),
+    actionsUid: 9,
+    assetDir: '/same-dir',
+    badgeCounts: {},
+    childUid: 8,
+    currentViewletId: '',
+    errorCount: 0,
+    height: 200,
+    initial: false,
+    platform: 0,
+    selectedIndex: 0,
+    uid,
+    views: ['PROBLEMS'],
+    warningCount: 0,
+    width: 300,
+    x: 0,
+    y: 0,
+  }
+  PanelStates.set(uid, oldState, newState)
+
+  const result = Diff2.diff2(uid)
+
+  expect(result).toEqual([DiffType.RenderIncremental, DiffType.RenderActionsUid])
 })

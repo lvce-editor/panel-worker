@@ -3,7 +3,7 @@ import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
 import * as GetRenderer from '../src/parts/GetRenderer/GetRenderer.ts'
-import { renderChildUid } from '../src/parts/RenderChildUid/RenderChildUid.ts'
+import { renderActionsUid } from '../src/parts/RenderActionsUid/RenderActionsUid.ts'
 import * as RenderItems from '../src/parts/RenderItems/RenderItems.ts'
 
 test('getRenderer should return RenderItems.renderItems for RenderItems diff type', () => {
@@ -11,9 +11,9 @@ test('getRenderer should return RenderItems.renderItems for RenderItems diff typ
   expect(renderer).toBe(RenderItems.renderItems)
 })
 
-test('getRenderer should return renderChildUid for RenderChildUid diff type', () => {
-  const renderer = GetRenderer.getRenderer(DiffType.RenderChildUid)
-  expect(renderer).toBe(renderChildUid)
+test('getRenderer should return renderActionsUid for RenderActionsUid diff type', () => {
+  const renderer = GetRenderer.getRenderer(DiffType.RenderActionsUid)
+  expect(renderer).toBe(renderActionsUid)
 })
 
 test('getRenderer should throw error for unknown diff type', () => {

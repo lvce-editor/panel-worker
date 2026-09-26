@@ -9,7 +9,9 @@ import { getMenuEntries } from '../src/parts/GetMenuEntries/GetMenuEntries.ts'
 test('getMenuEntries returns panel tab context menu entries', () => {
   const state: PanelState = {
     ...createDefaultState(),
+    availableViews: ['Problems', 'Output', 'Debug Console', 'Terminals'],
     currentViewletId: 'Problems',
+    views: ['Problems', 'Output', 'Debug Console', 'Terminals'],
   }
   const props: ContextMenuProps = {
     menuId: MenuEntryId.Tab,
@@ -20,14 +22,14 @@ test('getMenuEntries returns panel tab context menu entries', () => {
   expect(result).toHaveLength(7)
   expect(result[0]).toEqual({
     args: ['Problems'],
-    command: 'Panel.selectName',
+    command: 'Panel.toggleViewVisibility',
     flags: MenuItemFlags.Checked,
     id: 'panelTab.Problems',
     label: 'Problems',
   })
-  expect(result[1].flags).toBe(MenuItemFlags.Unchecked)
-  expect(result[2].flags).toBe(MenuItemFlags.Unchecked)
-  expect(result[3].flags).toBe(MenuItemFlags.Unchecked)
+  expect(result[1].flags).toBe(MenuItemFlags.Checked)
+  expect(result[2].flags).toBe(MenuItemFlags.Checked)
+  expect(result[3].flags).toBe(MenuItemFlags.Checked)
   expect(result[5]).toEqual({
     command: 'Layout.maximizePanel',
     flags: MenuItemFlags.None,
