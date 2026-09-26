@@ -1,6 +1,7 @@
 import { terminate } from '@lvce-editor/viewlet-registry'
 import * as Panel from '../Create/Create.ts'
 import { diff2 } from '../Diff2/Diff2.ts'
+import { getComponentState } from '../GetComponentState/GetComponentState.ts'
 import { getCurrentViewletId } from '../GetCurrentViewletId/GetCurrentViewletId.ts'
 import { handleMessagePort } from '../HandleMessagePort/HandleMessagePort.ts'
 import { handleProblemsSummaryChange } from '../HandleProblemsSummaryChange/HandleProblemsSummaryChange.ts'
@@ -11,6 +12,7 @@ import { renderEventListeners } from '../RenderEventListeners/RenderEventListene
 import { resize } from '../Resize/Resize.ts'
 import { saveState } from '../SaveState/SaveState.ts'
 import { selectName } from '../SelectName/SelectName.ts'
+import { setComponentState } from '../SetComponentState/SetComponentState.ts'
 
 const handleDirectMessagePort = (port: MessagePort, setAsRendererProcess = true): Promise<void> =>
   handleMessagePort(port, commandMap, setAsRendererProcess)
@@ -19,6 +21,7 @@ export const commandMap = {
   'Panel.create': Panel.create,
   'Panel.diff2': diff2,
   'Panel.getCommandIds': getCommandIds,
+  'Panel.getComponentState': getComponentState,
   'Panel.getCurrentViewletId': wrapGetter(getCurrentViewletId),
   'Panel.handleBlur': wrapCommand(LoadContent.handleBlur),
   'Panel.handleClickClose': wrapCommand(LoadContent.handleClickClose),
@@ -38,6 +41,7 @@ export const commandMap = {
   'Panel.selectIndexRaw': wrapCommand(LoadContent.selectRaw),
   'Panel.selectName': wrapCommand(selectName),
   'Panel.setBadgeCount': wrapCommand(LoadContent.setBadgeCount),
+  'Panel.setComponentState': setComponentState,
   'Panel.terminate': terminate,
   'Panel.toggleView': wrapCommand(LoadContent.toggleView),
 }
