@@ -9,6 +9,8 @@ export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
 
   // Assert
   const actions = Locator('.PanelHeader > .Actions')
-  await expect(actions.locator('button[title="Collapse All"]')).toBeVisible()
-  await expect(actions.locator('button[title="View as Table"]')).toBeVisible()
+  const collapseAllButton = actions.locator('button[title="Collapse All"]')
+  const viewAsTableButton = actions.locator('button[title="View as Table"]')
+  await expect(collapseAllButton).toBeVisible()
+  await expect(viewAsTableButton).toBeVisible()
 }

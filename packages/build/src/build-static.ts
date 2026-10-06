@@ -30,10 +30,17 @@ const remoteUrl = getRemoteUrl(workerPath)
 const occurrence = `// const panelWorkerUrl = \`\${assetDir}/packages/panel-worker/dist/panelWorkerMain.js\`
 const panelWorkerUrl = \`${remoteUrl}\``
 const replacement = `const panelWorkerUrl = \`\${assetDir}/packages/panel-worker/dist/panelWorkerMain.js\``
-if (!content.includes(occurrence)) {
+const runtimeWorkerOccurrence =
+  /panelWorkerUrl = getRuntimeWorkerUrl\(\s*"develop\.panelWorkerPath",\s*`\$\{assetDir\}\/packages\/renderer-worker\/node_modules\/@lvce-editor\/panel-worker\/dist\/panelWorkerMain\.js`\s*\);/
+const runtimeWorkerReplacement = `panelWorkerUrl = \`\${assetDir}/packages/panel-worker/dist/panelWorkerMain.js\``
+let newContent = content
+if (content.includes(occurrence)) {
+  newContent = content.replace(occurrence, replacement)
+} else if (runtimeWorkerOccurrence.test(content)) {
+  newContent = content.replace(runtimeWorkerOccurrence, runtimeWorkerReplacement)
+} else {
   throw new Error('occurrence not found')
 }
-const newContent = content.replace(occurrence, replacement)
 await writeFile(rendererWorkerPath, newContent)
 
 await cp(join(root, 'dist'), join(root, '.tmp', 'static'), { recursive: true })
