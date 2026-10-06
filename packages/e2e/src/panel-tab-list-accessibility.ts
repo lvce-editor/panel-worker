@@ -1,4 +1,4 @@
-import type { Test } from '@lvce-editor/test-worker'
+import type { Test } from '@lvce-editor/test-with-playwright'
 import type { TestContext } from './_TestContext.ts'
 
 export const name = 'panel.tab-list-accessibility'

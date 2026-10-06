@@ -5,12 +5,11 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "e2e": "test-with-playwright --only-extension=. --test-path=. --reuse-page",
-    "e2e:headless": "test-with-playwright --only-extension=. --test-path=. --headless --reuse-page",
+    "e2e": "test-with-playwright",
+    "e2e:headless": "test-with-playwright --headless",
     "type-check": "tsc"
   },
   "devDependencies": {
-    "@lvce-editor/test-with-playwright": "22.8.1",
-    "@lvce-editor/test-worker": "^17.27.10"
+    "@lvce-editor/test-with-playwright": "^22.40.6"
   }
 }

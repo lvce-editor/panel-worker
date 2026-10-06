@@ -1,12 +1,11 @@
 import { defineConfig } from 'eslint/config'
 import * as config from '@lvce-editor/eslint-config'
-import * as tsconfig from '@lvce-editor/eslint-plugin-tsconfig'
 
 export default defineConfig([
   ...config.default,
   ...config.recommendedVirtualDom,
   ...config.recommendedActions,
-  ...tsconfig.default,
+  ...config.recommendedTsconfig,
   {
     files: ['packages/{e2e,e2e-integration}/**/*.ts'],
     rules: {
