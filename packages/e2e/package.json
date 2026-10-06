@@ -11,6 +11,6 @@
   },
   "devDependencies": {
     "@lvce-editor/test-with-playwright": "22.8.1",
-    "@lvce-editor/test-worker": "^17.9.0"
+    "@lvce-editor/test-worker": "^17.27.10"
   }
 }
