@@ -12,14 +12,14 @@ export const test: Test = async ({ ContextMenu, expect, Locator, Panel }) => {
   await expect(problemsTab).toBeVisible()
 
   // The test worker does not expose a right-click helper yet.
-  // eslint-disable-next-line e2e/no-direct-click -- use the supported locator API to dispatch a right-click contextmenu event
+  // eslint-disable-next-line e2e/no-direct-click, @typescript-eslint/no-deprecated -- the test worker has no right-click helper
   await problemsTab.click({ button: 'right' })
 
   await ContextMenu.selectItem('Output')
   const outputTab = Locator('.PanelTab[name="Output"]')
   await expect(outputTab).toHaveCount(0)
 
-  // eslint-disable-next-line e2e/no-direct-click -- use the supported locator API to dispatch a right-click contextmenu event
+  // eslint-disable-next-line e2e/no-direct-click, @typescript-eslint/no-deprecated -- the test worker has no right-click helper
   await problemsTab.click({ button: 'right' })
   await ContextMenu.selectItem('Output')
   const restoredOutputTab = Locator('.PanelTab[name="Output"]')
