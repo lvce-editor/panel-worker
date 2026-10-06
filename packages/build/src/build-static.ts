@@ -30,13 +30,15 @@ const remoteUrl = getRemoteUrl(workerPath)
 const occurrence = `// const panelWorkerUrl = \`\${assetDir}/packages/panel-worker/dist/panelWorkerMain.js\`
 const panelWorkerUrl = \`${remoteUrl}\``
 const replacement = `const panelWorkerUrl = \`\${assetDir}/packages/panel-worker/dist/panelWorkerMain.js\``
-const runtimePanelWorkerUrl =
-  /panelWorkerUrl = getRuntimeWorkerUrl\(\s*"develop\.panelWorkerPath",\s*`\$\{assetDir\}\/packages\/renderer-worker\/node_modules\/@lvce-editor\/panel-worker\/dist\/panelWorkerMain\.js`\s*\)/
-const newContent = content.includes(occurrence)
-  ? content.replace(occurrence, replacement)
-  : content.replace(runtimePanelWorkerUrl, `panelWorkerUrl = \`${remoteUrl}\``)
-
-if (newContent === content) {
+const runtimeWorkerOccurrence =
+  /panelWorkerUrl = getRuntimeWorkerUrl\(\s*"develop\.panelWorkerPath",\s*`\$\{assetDir\}\/packages\/renderer-worker\/node_modules\/@lvce-editor\/panel-worker\/dist\/panelWorkerMain\.js`\s*\);/
+const runtimeWorkerReplacement = `panelWorkerUrl = \`\${assetDir}/packages/panel-worker/dist/panelWorkerMain.js\``
+let newContent = content
+if (content.includes(occurrence)) {
+  newContent = content.replace(occurrence, replacement)
+} else if (runtimeWorkerOccurrence.test(content)) {
+  newContent = content.replace(runtimeWorkerOccurrence, runtimeWorkerReplacement)
+} else {
   throw new Error('occurrence not found')
 }
 await writeFile(rendererWorkerPath, newContent)

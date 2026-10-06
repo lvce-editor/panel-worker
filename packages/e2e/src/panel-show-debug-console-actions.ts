@@ -9,6 +9,8 @@ export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
 
   // Assert
   const actions = Locator('.PanelHeader > .Actions')
-  await expect(actions.locator('input[name="filter"]')).toBeVisible()
-  await expect(actions.locator('button[title="Clear Console"]')).toBeVisible()
+  const filterInput = actions.locator('input[name="filter"]')
+  const clearConsoleButton = actions.locator('button[title="Clear Console"]')
+  await expect(filterInput).toBeVisible()
+  await expect(clearConsoleButton).toBeVisible()
 }

@@ -9,7 +9,10 @@ export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
 
   // Assert
   const actions = Locator('.PanelHeader > .Actions')
-  await expect(actions.locator('button[title="New Terminal"]')).toBeVisible()
-  await expect(actions.locator('button[title="Split Terminal"]')).toBeVisible()
-  await expect(actions.locator('button[title="Kill Terminal"]')).toBeVisible()
+  const newTerminalButton = actions.locator('button[title="New Terminal"]')
+  const splitTerminalButton = actions.locator('button[title="Split Terminal"]')
+  const killTerminalButton = actions.locator('button[title="Kill Terminal"]')
+  await expect(newTerminalButton).toBeVisible()
+  await expect(splitTerminalButton).toBeVisible()
+  await expect(killTerminalButton).toBeVisible()
 }

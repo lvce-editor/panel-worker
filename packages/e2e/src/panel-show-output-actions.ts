@@ -9,9 +9,14 @@ export const test: Test = async ({ expect, Locator, Panel }: TestContext) => {
 
   // Assert
   const actions = Locator('.PanelHeader > .Actions')
-  await expect(actions.locator('input[name="filter"]')).toBeVisible()
-  await expect(actions.locator('select[name="output"]')).toBeVisible()
-  await expect(actions.locator('button[title="clear output"]')).toBeVisible()
-  await expect(actions.locator('button[title="Turn auto scrolling off"]')).toBeVisible()
-  await expect(actions.locator('button[title="Settings"]')).toBeVisible()
+  const filterInput = actions.locator('input[name="filter"]')
+  const outputSelect = actions.locator('select[name="output"]')
+  const clearOutputButton = actions.locator('button[title="clear output"]')
+  const autoScrollButton = actions.locator('button[title="Turn auto scrolling off"]')
+  const settingsButton = actions.locator('button[title="Settings"]')
+  await expect(filterInput).toBeVisible()
+  await expect(outputSelect).toBeVisible()
+  await expect(clearOutputButton).toBeVisible()
+  await expect(autoScrollButton).toBeVisible()
+  await expect(settingsButton).toBeVisible()
 }

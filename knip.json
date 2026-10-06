@@ -5,15 +5,11 @@
       "project": ["*.js"]
     },
     "packages/build": {
-      "entry": ["src/build.js", "src/build-static.ts", "src/computeNodeModulesCacheKey.js", "src/dev.js"],
+      "entry": ["src/build.js", "src/build-static.ts", "src/computeNodeModulesCacheKey.js", "src/dev.js", "src/measureMemory.ts"],
       "project": ["src/**/*.{js,ts}"]
     },
     "packages/e2e": {
       "entry": ["src/**/*.ts"],
-      "project": ["src/**/*.ts"]
-    },
-    "packages/memory": {
-      "entry": ["src/measureMemory.ts"],
       "project": ["src/**/*.ts"]
     },
     "packages/panel-worker": {
