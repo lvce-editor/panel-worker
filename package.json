@@ -14,7 +14,8 @@
     "e2e": "npm run e2e --workspace=packages/e2e",
     "format": "prettier --write .",
     "lint": "eslint . && prettier --check . && knip --no-config-hints",
-    "measure": "npm run measure --workspace=packages/memory",
+    "measure": "node --experimental-strip-types packages/build/src/measureMemory.ts",
+    "measure:visible": "node --experimental-strip-types packages/build/src/measureMemory.ts --no-headless",
     "test": "npm test --workspaces --if-present",
     "type-check": "tsc -b"
   },
