@@ -1,4 +1,4 @@
-import type { Test } from '@lvce-editor/test-worker'
+import type { Test } from '@lvce-editor/test-with-playwright'
 import type { TestContext } from './_TestContext.ts'
 
 export type PanelName = 'Debug Console' | 'Output' | 'Problems' | 'Terminals'
