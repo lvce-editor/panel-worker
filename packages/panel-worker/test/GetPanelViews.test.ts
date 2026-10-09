@@ -16,7 +16,7 @@ test('getPanelViews should include Ports for remote ssh workspaces', () => {
   ])
 })
 
-test.each(['file:///workspace', 'codespaces://workspace'])('getPanelViews should omit Ports for %s workspaces', (workspaceUri) => {
+test.each(['file:///workspace'])('getPanelViews should omit Ports for %s workspaces', (workspaceUri) => {
   expect(getPanelViews(workspaceUri)).not.toContain(ViewletModuleId.Ports)
 })
 
@@ -26,4 +26,8 @@ test('getPanelViews should return a new array on every call', () => {
 
   expect(views1).toEqual(views2)
   expect(views1).not.toBe(views2)
+})
+
+test('getPanelViews includes Ports for Codespaces workspaces', () => {
+  expect(getPanelViews('codespaces://happy-cat/workspaces/project')).toContain(ViewletModuleId.Ports)
 })
