@@ -127,3 +127,54 @@ test('loadContent restores hidden panel views and selects a visible view', async
   }
   expect(mockRpc.invocations).toContainEqual(['Layout.createPanelViewlet', 'Debug Console', 42, 42, 42, expect.any(Object), '', false])
 })
+
+test.each([undefined, {}])(
+  'workspace refresh preserves the selected Output panel and hidden views without saved preferences: %p',
+  async (savedState) => {
+    using mockRpc = RendererWorker.registerMockRpc({
+      'Layout.createPanelViewlet': async () => {},
+      'SaveState.saveViewletStateWithStorageId': async () => {},
+      'Viewlet.dispose': async () => {},
+    })
+    const state = { ...createState(), currentViewletId: 'Output', hiddenViews: ['Debug Console'] }
+    const result = await loadContent(state, savedState, 'codespaces://happy-cat/workspaces/project')
+    expect(result.currentViewletId).toBe('Output')
+    expect(result.views).toContain('Ports')
+    expect(result.views).not.toContain('Debug Console')
+    expect(result.hiddenViews).toEqual(['Debug Console'])
+    expect(mockRpc.invocations).toContainEqual([
+      'Layout.createPanelViewlet',
+      'Output',
+      expect.any(Number),
+      expect.any(Number),
+      expect.any(Number),
+      expect.any(Object),
+      '',
+      false,
+    ])
+  },
+)
+
+test('explicit saved panel selection takes precedence over the current panel', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.createPanelViewlet': async () => {},
+    'SaveState.saveViewletStateWithStorageId': async () => {},
+    'Viewlet.dispose': async () => {},
+  })
+  const result = await loadContent(
+    { ...createState(), currentViewletId: 'Output' },
+    { currentViewletId: 'Problems', hiddenViews: [] },
+    'codespaces://happy-cat/workspaces/project',
+  )
+  expect(result.currentViewletId).toBe('Problems')
+  expect(mockRpc.invocations).toContainEqual([
+    'Layout.createPanelViewlet',
+    'Problems',
+    expect.any(Number),
+    expect.any(Number),
+    expect.any(Number),
+    expect.any(Object),
+    '',
+    false,
+  ])
+})

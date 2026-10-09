@@ -5,10 +5,10 @@ import * as GetSavedViewletId from '../GetSavedViewletId/GetSavedViewletId.ts'
 import * as OpenViewlet from '../OpenViewlet/OpenViewlet.ts'
 
 export const loadContent = (state: PanelState, savedState: SavedPanelState | undefined, workspaceUri = ''): Promise<PanelState> => {
-  const { currentViewletId: activeViewletId } = state
-  const savedViewletId = GetSavedViewletId.getSavedViewletId(savedState)
+  const { currentViewletId: activeViewletId, hiddenViews: activeHiddenViews } = state
+  const savedViewletId = savedState?.currentViewletId || activeViewletId || GetSavedViewletId.getSavedViewletId(savedState)
   const availableViews = GetPanelViews.getPanelViews(workspaceUri)
-  const hiddenViews = (savedState?.hiddenViews || []).filter((view) => availableViews.includes(view))
+  const hiddenViews = (savedState?.hiddenViews || activeHiddenViews || []).filter((view) => availableViews.includes(view))
   let views = availableViews.filter((view) => !hiddenViews.includes(view))
   if (views.length === 0 && availableViews.length > 0) {
     views = [availableViews[0]]
