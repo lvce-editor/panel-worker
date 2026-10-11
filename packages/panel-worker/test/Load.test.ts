@@ -1,4 +1,5 @@
 import { expect, jest, test } from '@jest/globals'
+import { PlatformType } from '@lvce-editor/constants'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
@@ -55,6 +56,30 @@ test('loadContent preserves Ports in a remote ssh workspace', async () => {
     random.mockRestore()
   }
   expect(mockRpc.invocations).toContainEqual(['Layout.createPanelViewlet', 'Ports', 42, 42, 42, expect.any(Object), '', false])
+})
+
+test('loadContent falls back to Problems when restoring Terminals on web', async () => {
+  using mockRpc = RendererWorker.registerMockRpc({
+    'Layout.createPanelViewlet': async () => {},
+    'SaveState.saveViewletStateWithStorageId': async () => {},
+    'Viewlet.dispose': async () => {},
+  })
+  const random = jest.spyOn(Math, 'random').mockReturnValue(42)
+
+  try {
+    const state = { ...createState(), platform: PlatformType.Web }
+    const result = await loadContent(state, { currentViewletId: 'Terminals' }, 'file:///workspace')
+
+    expect(result).toMatchObject({
+      availableViews: ['Problems', 'Output', 'Debug Console'],
+      currentViewletId: 'Problems',
+      selectedIndex: 0,
+      views: ['Problems', 'Output', 'Debug Console'],
+    })
+  } finally {
+    random.mockRestore()
+  }
+  expect(mockRpc.invocations).toContainEqual(['Layout.createPanelViewlet', 'Problems', 42, 42, 42, expect.any(Object), '', false])
 })
 
 test('loadContent restores Ports in a devcontainer workspace', async () => {

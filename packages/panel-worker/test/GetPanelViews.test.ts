@@ -1,4 +1,5 @@
 import { expect, test } from '@jest/globals'
+import { PlatformType } from '@lvce-editor/constants'
 import { getPanelViews } from '../src/parts/GetPanelViews/GetPanelViews.ts'
 import * as ViewletModuleId from '../src/parts/ViewletModuleId/ViewletModuleId.ts'
 
@@ -12,6 +13,19 @@ test('getPanelViews should include Ports for remote ssh workspaces', () => {
     ViewletModuleId.Output,
     ViewletModuleId.DebugConsole,
     ViewletModuleId.Terminals,
+    ViewletModuleId.Ports,
+  ])
+})
+
+test('getPanelViews should omit Terminals on web', () => {
+  expect(getPanelViews('', PlatformType.Web)).toEqual([ViewletModuleId.Problems, ViewletModuleId.Output, ViewletModuleId.DebugConsole])
+})
+
+test('getPanelViews should omit Terminals and include Ports for remote ssh workspaces on web', () => {
+  expect(getPanelViews('remote-ssh://host/workspace', PlatformType.Web)).toEqual([
+    ViewletModuleId.Problems,
+    ViewletModuleId.Output,
+    ViewletModuleId.DebugConsole,
     ViewletModuleId.Ports,
   ])
 })
