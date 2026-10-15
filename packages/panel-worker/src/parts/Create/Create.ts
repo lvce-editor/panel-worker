@@ -1,8 +1,19 @@
 import type { PanelState } from '../PanelState/PanelState.ts'
 import { set } from '../PanelStates/PanelStates.ts'
 
-export const create = (uid: number, uri: string, x: number, y: number, width: number, height: number, platform: number, assetDir: string): void => {
+export const create = (
+  uid: number,
+  uri: string,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  platform: number,
+  assetDir: string,
+  applicationId?: string,
+): void => {
   const state: PanelState = {
+    ...(applicationId !== undefined && { applicationId }),
     actionsUid: 0,
     assetDir,
     availableViews: [],

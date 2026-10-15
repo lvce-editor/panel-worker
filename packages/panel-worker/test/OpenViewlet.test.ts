@@ -65,3 +65,11 @@ test('openViewlet ignores views that are not available', async () => {
   expect(result).toBe(state)
   expect(mockRpc.invocations).toEqual([])
 })
+
+test('creates a child in the panel application so it inherits extension services', async () => {
+  using rpc = RendererWorker.registerMockRpc({ 'Application.execute': async () => {} })
+  const state = { ...createDefaultState(), applicationId: 'preview', views: ['Output'] }
+  await openViewlet(state, 'Output')
+  expect(rpc.invocations).toHaveLength(1)
+  expect(rpc.invocations[0].slice(0, 4)).toEqual(['Application.execute', 'preview', 'Layout.createPanelViewlet', 'Output'])
+})

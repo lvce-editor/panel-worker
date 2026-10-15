@@ -2,6 +2,7 @@ import type { Tab } from '../Tab/Tab.ts'
 
 export interface PanelState {
   readonly actionsUid: number
+  readonly applicationId?: string
   readonly assetDir: string
   readonly availableViews: readonly string[]
   readonly badgeCounts: Readonly<Record<string, number>>
