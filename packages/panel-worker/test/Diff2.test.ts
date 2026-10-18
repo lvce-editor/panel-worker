@@ -4,10 +4,11 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import * as Diff2 from '../src/parts/Diff2/Diff2.ts'
 import * as DiffType from '../src/parts/DiffType/DiffType.ts'
 import * as PanelStates from '../src/parts/PanelStates/PanelStates.ts'
+import { createPanelView, createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 test('diff2 should return empty diff when relevant state is unchanged', () => {
   const uid = 1001
-  const views = ['PROBLEMS']
+  const views = [createPanelView('PROBLEMS')]
   const oldState: PanelState = {
     ...createDefaultState(),
     actionsUid: 0,
@@ -68,7 +69,7 @@ test('diff2 should return RenderIncremental diff when assetDir changes', () => {
     platform: 0,
     selectedIndex: 0,
     uid,
-    views: ['PROBLEMS'],
+    views: createPanelViews('PROBLEMS'),
     warningCount: 0,
     width: 300,
     x: 0,
@@ -87,7 +88,7 @@ test('diff2 should return RenderIncremental diff when assetDir changes', () => {
     platform: 0,
     selectedIndex: 0,
     uid,
-    views: ['PROBLEMS'],
+    views: createPanelViews('PROBLEMS'),
     warningCount: 0,
     width: 300,
     x: 0,
@@ -106,7 +107,7 @@ test('diff2 should return RenderIncremental diff when badge counts change', () =
     ...createDefaultState(),
     badgeCounts: { Problems: 3 },
     uid,
-    views: ['Problems', 'Output'],
+    views: createPanelViews('Problems', 'Output'),
   }
   const newState: PanelState = {
     ...oldState,
@@ -134,7 +135,7 @@ test('diff2 should not render a child disposal when childUid changes', () => {
     platform: 0,
     selectedIndex: 0,
     uid,
-    views: ['PROBLEMS'],
+    views: createPanelViews('PROBLEMS'),
     warningCount: 0,
     width: 300,
     x: 0,
@@ -153,7 +154,7 @@ test('diff2 should not render a child disposal when childUid changes', () => {
     platform: 0,
     selectedIndex: 0,
     uid,
-    views: ['PROBLEMS'],
+    views: createPanelViews('PROBLEMS'),
     warningCount: 0,
     width: 300,
     x: 0,
@@ -181,7 +182,7 @@ test('diff2 should return RenderIncremental and RenderActionsUid when actionsUid
     platform: 0,
     selectedIndex: 0,
     uid,
-    views: ['PROBLEMS'],
+    views: createPanelViews('PROBLEMS'),
     warningCount: 0,
     width: 300,
     x: 0,
@@ -200,7 +201,7 @@ test('diff2 should return RenderIncremental and RenderActionsUid when actionsUid
     platform: 0,
     selectedIndex: 0,
     uid,
-    views: ['PROBLEMS'],
+    views: createPanelViews('PROBLEMS'),
     warningCount: 0,
     width: 300,
     x: 0,

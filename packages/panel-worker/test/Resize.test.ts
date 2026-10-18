@@ -3,6 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as Resize from '../src/parts/Resize/Resize.ts'
+import { createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 test('resize should merge dimensions into state and call Viewlet.resize', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
@@ -23,7 +24,7 @@ test('resize should merge dimensions into state and call Viewlet.resize', async 
     platform: 0,
     selectedIndex: 0,
     uid: 1,
-    views: ['PROBLEMS'],
+    views: createPanelViews('PROBLEMS'),
     warningCount: 0,
     width: 100,
     x: 10,
@@ -60,7 +61,7 @@ test('resize should keep unrelated fields unchanged', async () => {
     platform: 0,
     selectedIndex: 2,
     uid: 1,
-    views: ['PROBLEMS', 'OUTPUT'],
+    views: createPanelViews('PROBLEMS', 'OUTPUT'),
     warningCount: 0,
     width: 300,
     x: 10,
@@ -72,7 +73,7 @@ test('resize should keep unrelated fields unchanged', async () => {
 
   expect(result.currentViewletId).toBe('abc')
   expect(result.selectedIndex).toBe(2)
-  expect(result.views).toEqual(['PROBLEMS', 'OUTPUT'])
+  expect(result.views).toEqual(createPanelViews('PROBLEMS', 'OUTPUT'))
   expect(result.x).toBe(50)
   expect(result.y).toBe(75)
   expect(mockRpc.invocations).toEqual([['Viewlet.resize', 5, dimensions]])

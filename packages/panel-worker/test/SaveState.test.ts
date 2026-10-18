@@ -3,6 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { saveState } from '../src/parts/SaveState/SaveState.ts'
+import { createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 test('saveState should return persisted state with currentViewletId and hidden views', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
@@ -22,7 +23,7 @@ test('saveState should return persisted state with currentViewletId and hidden v
     platform: 2,
     selectedIndex: 0,
     uid: 13,
-    views: ['PROBLEMS', 'OUTPUT'],
+    views: createPanelViews('PROBLEMS', 'OUTPUT'),
     warningCount: 2,
     width: 300,
     x: 10,
@@ -55,7 +56,7 @@ test('saveState should not include unrelated state properties', async () => {
     platform: 2,
     selectedIndex: 0,
     uid: 13,
-    views: ['PROBLEMS', 'OUTPUT'],
+    views: createPanelViews('PROBLEMS', 'OUTPUT'),
     warningCount: 2,
     width: 300,
     x: 10,
@@ -86,7 +87,7 @@ test('saveState should preserve empty currentViewletId value', async () => {
     platform: 2,
     selectedIndex: 0,
     uid: 13,
-    views: ['PROBLEMS', 'OUTPUT'],
+    views: createPanelViews('PROBLEMS', 'OUTPUT'),
     warningCount: 2,
     width: 300,
     x: 10,

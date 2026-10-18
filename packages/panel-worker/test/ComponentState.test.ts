@@ -3,11 +3,12 @@ import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaul
 import { getComponentState } from '../src/parts/GetComponentState/GetComponentState.ts'
 import * as PanelStates from '../src/parts/PanelStates/PanelStates.ts'
 import { setComponentState } from '../src/parts/SetComponentState/SetComponentState.ts'
+import { createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 test('gets and sets the live component state', async () => {
   const uid = 101
   const oldState = { ...createDefaultState(), uid }
-  const newState = { ...oldState, views: ['Live Problems'] }
+  const newState = { ...oldState, views: createPanelViews('Live Problems') }
   PanelStates.set(uid, oldState, oldState)
 
   expect(getComponentState(uid)).toBe(oldState)

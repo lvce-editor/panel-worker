@@ -5,13 +5,14 @@ import type { MenuEntry } from '../src/parts/MenuEntry/MenuEntry.ts'
 import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { getMenuEntries } from '../src/parts/GetMenuEntries/GetMenuEntries.ts'
+import { createPanelView, createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 test('getMenuEntries returns panel tab context menu entries', () => {
   const state: PanelState = {
     ...createDefaultState(),
-    availableViews: ['Problems', 'Output', 'Debug Console', 'Terminals'],
+    availableViews: createPanelViews('Problems', 'Output', 'Debug Console', 'Terminals'),
     currentViewletId: 'Problems',
-    views: ['Problems', 'Output', 'Debug Console', 'Terminals'],
+    views: createPanelViews('Problems', 'Output', 'Debug Console', 'Terminals'),
   }
   const props: ContextMenuProps = {
     menuId: MenuEntryId.Tab,
@@ -55,4 +56,22 @@ test('getMenuEntries returns empty array for unsupported menu id', () => {
   const result = getMenuEntries(state, props)
 
   expect(result).toEqual([])
+})
+
+test('getMenuEntries uses the view ID for commands and the view name for labels', () => {
+  const extensionView = createPanelView('publisher.extension-view', 'Extension View', 'extension')
+  const state: PanelState = {
+    ...createDefaultState(),
+    availableViews: [extensionView],
+    views: [extensionView],
+  }
+  const props: ContextMenuProps = { menuId: MenuEntryId.Tab }
+
+  expect(getMenuEntries(state, props)[0]).toEqual({
+    args: ['publisher.extension-view'],
+    command: 'Panel.toggleViewVisibility',
+    flags: MenuItemFlags.Checked,
+    id: 'panelTab.publisher.extension-view',
+    label: 'Extension View',
+  })
 })

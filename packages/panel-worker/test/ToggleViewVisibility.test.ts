@@ -4,15 +4,16 @@ import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { toggleView } from '../src/parts/ToggleView/ToggleView.ts'
 import { toggleViewVisibility } from '../src/parts/ToggleViewVisibility/ToggleViewVisibility.ts'
+import { createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 const createState = (currentViewletId = 'Problems'): PanelState => ({
   ...createDefaultState(),
-  availableViews: ['Problems', 'Output', 'Debug Console'],
+  availableViews: createPanelViews('Problems', 'Output', 'Debug Console'),
   childUid: 10,
   currentViewletId,
   selectedIndex: ['Problems', 'Output', 'Debug Console'].indexOf(currentViewletId),
   uid: 20,
-  views: ['Problems', 'Output', 'Debug Console'],
+  views: createPanelViews('Problems', 'Output', 'Debug Console'),
 })
 
 test('toggleViewVisibility hides an inactive view and keeps available view state', async () => {
@@ -21,11 +22,11 @@ test('toggleViewVisibility hides an inactive view and keeps available view state
   const result = await toggleViewVisibility(state, 'Output')
 
   expect(result).toMatchObject({
-    availableViews: ['Problems', 'Output', 'Debug Console'],
+    availableViews: createPanelViews('Problems', 'Output', 'Debug Console'),
     currentViewletId: 'Debug Console',
     hiddenViews: ['Output'],
     selectedIndex: 1,
-    views: ['Problems', 'Debug Console'],
+    views: createPanelViews('Problems', 'Debug Console'),
   })
 })
 
@@ -34,12 +35,12 @@ test('toggleViewVisibility restores a hidden view without duplicating it', async
     ...createState('Debug Console'),
     hiddenViews: ['Output'],
     selectedIndex: 1,
-    views: ['Problems', 'Debug Console'],
+    views: createPanelViews('Problems', 'Debug Console'),
   }
 
   const result = await toggleViewVisibility(state, 'Output')
 
-  expect(result.views).toEqual(['Problems', 'Output', 'Debug Console'])
+  expect(result.views).toEqual(createPanelViews('Problems', 'Output', 'Debug Console'))
   expect(result.selectedIndex).toBe(2)
   expect(result.hiddenViews).toEqual([])
 })
@@ -55,7 +56,7 @@ test('toggleViewVisibility selects the next visible view when hiding the active 
     currentViewletId: 'Debug Console',
     hiddenViews: ['Output'],
     selectedIndex: 1,
-    views: ['Problems', 'Debug Console'],
+    views: createPanelViews('Problems', 'Debug Console'),
   })
   expect(mockRpc.invocations).toContainEqual([
     'Layout.createPanelViewlet',
@@ -72,7 +73,7 @@ test('toggleViewVisibility selects the next visible view when hiding the active 
 test('toggleViewVisibility keeps the last visible view recoverable', async () => {
   const state: PanelState = {
     ...createState('Problems'),
-    views: ['Problems'],
+    views: createPanelViews('Problems'),
   }
 
   const result = await toggleViewVisibility(state, 'Problems')
@@ -88,7 +89,7 @@ test('toggleView explicitly shows and selects a hidden panel view', async () => 
   const state: PanelState = {
     ...createState(),
     hiddenViews: ['Output'],
-    views: ['Problems', 'Debug Console'],
+    views: createPanelViews('Problems', 'Debug Console'),
   }
 
   const result = await toggleView(state, 'Output')
@@ -97,7 +98,7 @@ test('toggleView explicitly shows and selects a hidden panel view', async () => 
     currentViewletId: 'Output',
     hiddenViews: [],
     selectedIndex: 1,
-    views: ['Problems', 'Output', 'Debug Console'],
+    views: createPanelViews('Problems', 'Output', 'Debug Console'),
   })
   expect(mockRpc.invocations).toContainEqual([
     'Layout.createPanelViewlet',
