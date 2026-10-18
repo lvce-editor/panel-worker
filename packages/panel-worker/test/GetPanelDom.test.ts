@@ -5,6 +5,7 @@ import * as ClassNames from '../src/parts/ClassNames/ClassNames.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as DomEventListenerFunctions from '../src/parts/DomEventListenerFunctions/DomEventListenerFunctions.ts'
 import { getPanelDom } from '../src/parts/GetPanelDom/GetPanelDom.ts'
+import { createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 test('getPanelDom should render panel with tabs and fallback actions div when actions uid is 0', () => {
   const state: PanelState = {
@@ -20,7 +21,7 @@ test('getPanelDom should render panel with tabs and fallback actions div when ac
     platform: 0,
     selectedIndex: 1,
     uid: 1,
-    views: ['PROBLEMS', 'OUTPUT'],
+    views: createPanelViews('PROBLEMS', 'OUTPUT'),
     warningCount: 0,
   }
 
@@ -128,7 +129,7 @@ test('getPanelDom should render actions reference when actions uid is set', () =
     platform: 0,
     selectedIndex: 0,
     uid: 1,
-    views: ['PROBLEMS'],
+    views: createPanelViews('PROBLEMS'),
     warningCount: 0,
   }
 
@@ -158,7 +159,7 @@ test('getPanelDom should render unmaximize button when maximized', () => {
     platform: 0,
     selectedIndex: 0,
     uid: 1,
-    views: ['PROBLEMS'],
+    views: createPanelViews('PROBLEMS'),
     warningCount: 0,
   }
 

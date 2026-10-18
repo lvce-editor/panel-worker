@@ -4,18 +4,18 @@ import type { MenuEntry } from '../MenuEntry/MenuEntry.ts'
 import type { PanelState } from '../PanelState/PanelState.ts'
 import * as MenuEntrySeparator from '../MenuEntrySeparator/MenuEntrySeparator.ts'
 
-const getViewMenuItemFlags = (state: PanelState, view: string): number => {
+const getViewMenuItemFlags = (state: PanelState, viewId: string): number => {
   const { views } = state
-  return views.includes(view) ? MenuItemFlags.Checked : MenuItemFlags.Unchecked
+  return views.some((view) => view.id === viewId) ? MenuItemFlags.Checked : MenuItemFlags.Unchecked
 }
 
-const getViewMenuEntry = (state: PanelState, view: string): MenuEntry => {
+const getViewMenuEntry = (state: PanelState, view: PanelState['availableViews'][number]): MenuEntry => {
   return {
-    args: [view],
+    args: [view.id],
     command: 'Panel.toggleViewVisibility',
-    flags: getViewMenuItemFlags(state, view),
-    id: `panelTab.${view}`,
-    label: view,
+    flags: getViewMenuItemFlags(state, view.id),
+    id: `panelTab.${view.id}`,
+    label: view.name,
   }
 }
 

@@ -10,15 +10,14 @@ const badgeNode: VirtualDomNode = {
   type: VirtualDomElements.Div,
 }
 
-export const createPanelTab = (tab: string, badgeCount: number, isSelected: boolean): readonly VirtualDomNode[] => {
-  const label = tab
+export const createPanelTab = (id: string, label: string, badgeCount: number, isSelected: boolean): readonly VirtualDomNode[] => {
   const className = GetTabClassName.getTabClassName(isSelected)
   const childCount = badgeCount ? 2 : 1
   const tabDom: VirtualDomNode = {
     ariaSelected: isSelected,
     childCount,
     className,
-    name: tab,
+    name: id,
     onClick: DomEventListenerFunctions.HandleClickTab,
     onContextMenu: DomEventListenerFunctions.HandleTabContextMenu,
     role: AriaRoles.Tab,

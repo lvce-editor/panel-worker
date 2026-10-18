@@ -6,7 +6,7 @@ export const selectName = async (state: PanelState, name: string): Promise<Panel
     return state
   }
   const { views } = state
-  const index = views.indexOf(name)
+  const index = views.findIndex((view) => view.id === name)
   if (index === -1) {
     return state
   }

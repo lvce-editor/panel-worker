@@ -6,5 +6,5 @@ export const selectIndex = async (state: PanelState, index: number, uri = ''): P
   if (index < 0 || index >= views.length) {
     return state
   }
-  return OpenViewlet.openViewlet(state, views[index], true, uri)
+  return OpenViewlet.openViewlet(state, views[index].id, true, uri)
 }

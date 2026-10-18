@@ -3,6 +3,7 @@ import { ViewletCommand } from '@lvce-editor/constants'
 import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { renderIncremental } from '../src/parts/RenderIncremental/RenderIncremental.ts'
+import { createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 test('renderIncremental should return SetPatches command with empty patches when dom is unchanged', () => {
   const state: PanelState = {
@@ -17,7 +18,7 @@ test('renderIncremental should return SetPatches command with empty patches when
     platform: 0,
     selectedIndex: 0,
     uid: 1,
-    views: ['PROBLEMS', 'OUTPUT'],
+    views: createPanelViews('PROBLEMS', 'OUTPUT'),
   }
 
   const result = renderIncremental(state, state)
@@ -38,7 +39,7 @@ test('renderIncremental should return patches when tab selection changes', () =>
     platform: 0,
     selectedIndex: 0,
     uid: 1,
-    views: ['PROBLEMS', 'OUTPUT'],
+    views: createPanelViews('PROBLEMS', 'OUTPUT'),
   }
   const newState: PanelState = {
     ...createDefaultState(),
@@ -52,7 +53,7 @@ test('renderIncremental should return patches when tab selection changes', () =>
     platform: 0,
     selectedIndex: 1,
     uid: 1,
-    views: ['PROBLEMS', 'OUTPUT'],
+    views: createPanelViews('PROBLEMS', 'OUTPUT'),
   }
 
   const result = renderIncremental(oldState, newState)
@@ -76,7 +77,7 @@ test('renderIncremental should use uid from new state', () => {
     platform: 0,
     selectedIndex: 0,
     uid: 1,
-    views: ['PROBLEMS', 'OUTPUT'],
+    views: createPanelViews('PROBLEMS', 'OUTPUT'),
   }
   const newState: PanelState = {
     ...createDefaultState(),
@@ -90,7 +91,7 @@ test('renderIncremental should use uid from new state', () => {
     platform: 0,
     selectedIndex: 1,
     uid: 99,
-    views: ['PROBLEMS', 'OUTPUT'],
+    views: createPanelViews('PROBLEMS', 'OUTPUT'),
   }
 
   const result = renderIncremental(oldState, newState)
@@ -111,7 +112,7 @@ test('renderIncremental should return patches when maximized changes', () => {
     platform: 0,
     selectedIndex: 0,
     uid: 1,
-    views: ['PROBLEMS'],
+    views: createPanelViews('PROBLEMS'),
   }
   const newState: PanelState = {
     ...oldState,

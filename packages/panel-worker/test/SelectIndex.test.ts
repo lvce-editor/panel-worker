@@ -2,6 +2,7 @@ import { expect, jest, test } from '@jest/globals'
 import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import * as SelectIndex from '../src/parts/SelectIndex/SelectIndex.ts'
+import { createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 test('selectIndex focuses the selected panel view with the requested uri', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
@@ -11,7 +12,7 @@ test('selectIndex focuses the selected panel view with the requested uri', async
   const state = {
     ...createDefaultState(),
     height: 200,
-    views: ['Problems', 'Terminals'],
+    views: createPanelViews('Problems', 'Terminals'),
     width: 300,
     x: 10,
     y: 20,
@@ -36,7 +37,7 @@ test('selectIndex ignores an unavailable index', async () => {
   })
   const state = {
     ...createDefaultState(),
-    views: ['Problems', 'Terminals'],
+    views: createPanelViews('Problems', 'Terminals'),
   }
 
   const result = await SelectIndex.selectIndex(state, 2)

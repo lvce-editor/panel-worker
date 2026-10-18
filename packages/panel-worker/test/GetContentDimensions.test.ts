@@ -1,11 +1,12 @@
 import { expect, test } from '@jest/globals'
 import * as GetContentDimensions from '../src/parts/GetContentDimensions/GetContentDimensions.ts'
+import { createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 test('getContentDimensions should derive bounds from header height in state', () => {
   const result = GetContentDimensions.getContentDimensions({
     actionsUid: 0,
     assetDir: '',
-    availableViews: [],
+    availableViews: createPanelViews(),
     badgeCounts: {},
     childUid: 0,
     currentViewletId: '',
@@ -19,7 +20,7 @@ test('getContentDimensions should derive bounds from header height in state', ()
     selectedIndex: -1,
     tabs: [],
     uid: 1,
-    views: [],
+    views: createPanelViews(),
     warningCount: 0,
     width: 300,
     x: 10,

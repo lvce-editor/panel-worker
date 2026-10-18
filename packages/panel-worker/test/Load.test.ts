@@ -4,13 +4,14 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import type { PanelState } from '../src/parts/PanelState/PanelState.ts'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { loadContent } from '../src/parts/Load/Load.ts'
+import { createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 const createState = (): PanelState => ({
   ...createDefaultState(),
   childUid: 12,
   currentViewletId: 'Ports',
   height: 200,
-  views: ['Problems', 'Ports'],
+  views: createPanelViews('Problems', 'Ports'),
   width: 300,
 })
 
@@ -28,7 +29,7 @@ test('loadContent falls back to Problems when restoring Ports in a local workspa
     expect(result).toMatchObject({
       currentViewletId: 'Problems',
       selectedIndex: 0,
-      views: ['Problems', 'Output', 'Debug Console', 'Terminals'],
+      views: createPanelViews('Problems', 'Output', 'Debug Console', 'Terminals'),
     })
   } finally {
     random.mockRestore()
@@ -50,7 +51,7 @@ test('loadContent preserves Ports in a remote ssh workspace', async () => {
     expect(result).toMatchObject({
       currentViewletId: 'Ports',
       selectedIndex: 4,
-      views: ['Problems', 'Output', 'Debug Console', 'Terminals', 'Ports'],
+      views: createPanelViews('Problems', 'Output', 'Debug Console', 'Terminals', 'Ports'),
     })
   } finally {
     random.mockRestore()
@@ -71,10 +72,10 @@ test('loadContent falls back to Problems when restoring Terminals on web', async
     const result = await loadContent(state, { currentViewletId: 'Terminals' }, 'file:///workspace')
 
     expect(result).toMatchObject({
-      availableViews: ['Problems', 'Output', 'Debug Console'],
+      availableViews: createPanelViews('Problems', 'Output', 'Debug Console'),
       currentViewletId: 'Problems',
       selectedIndex: 0,
-      views: ['Problems', 'Output', 'Debug Console'],
+      views: createPanelViews('Problems', 'Output', 'Debug Console'),
     })
   } finally {
     random.mockRestore()
@@ -96,7 +97,7 @@ test('loadContent restores Ports in a devcontainer workspace', async () => {
     expect(result).toMatchObject({
       currentViewletId: 'Ports',
       selectedIndex: 4,
-      views: ['Problems', 'Output', 'Debug Console', 'Terminals', 'Ports'],
+      views: createPanelViews('Problems', 'Output', 'Debug Console', 'Terminals', 'Ports'),
     })
   } finally {
     random.mockRestore()
@@ -118,10 +119,10 @@ test('loadContent updates Ports availability across workspace changes', async ()
     const repeatedDevcontainerChange = await loadContent(devcontainer, undefined, 'devcontainers:///workspace')
     const returnedToLocal = await loadContent(repeatedDevcontainerChange, undefined, 'file:///workspace')
 
-    expect(local.availableViews).not.toContain('Ports')
-    expect(devcontainer.availableViews).toContain('Ports')
-    expect(repeatedDevcontainerChange.availableViews.filter((view) => view === 'Ports')).toHaveLength(1)
-    expect(returnedToLocal.availableViews).not.toContain('Ports')
+    expect(local.availableViews.some((view) => view.id === 'Ports')).toBe(false)
+    expect(devcontainer.availableViews.some((view) => view.id === 'Ports')).toBe(true)
+    expect(repeatedDevcontainerChange.availableViews.filter((view) => view.id === 'Ports')).toHaveLength(1)
+    expect(returnedToLocal.availableViews.some((view) => view.id === 'Ports')).toBe(false)
     expect(returnedToLocal.currentViewletId).toBe('Problems')
   } finally {
     random.mockRestore()
@@ -141,11 +142,11 @@ test('loadContent restores hidden panel views and selects a visible view', async
     const result = await loadContent(createState(), { currentViewletId: 'Output', hiddenViews: ['Problems', 'Output'] }, 'file:///workspace')
 
     expect(result).toMatchObject({
-      availableViews: ['Problems', 'Output', 'Debug Console', 'Terminals'],
+      availableViews: createPanelViews('Problems', 'Output', 'Debug Console', 'Terminals'),
       currentViewletId: 'Debug Console',
       hiddenViews: ['Problems', 'Output'],
       selectedIndex: 0,
-      views: ['Debug Console', 'Terminals'],
+      views: createPanelViews('Debug Console', 'Terminals'),
     })
   } finally {
     random.mockRestore()
@@ -164,8 +165,8 @@ test.each([undefined, {}])(
     const state = { ...createState(), currentViewletId: 'Output', hiddenViews: ['Debug Console'] }
     const result = await loadContent(state, savedState, 'codespaces://happy-cat/workspaces/project')
     expect(result.currentViewletId).toBe('Output')
-    expect(result.views).toContain('Ports')
-    expect(result.views).not.toContain('Debug Console')
+    expect(result.views.some((view) => view.id === 'Ports')).toBe(true)
+    expect(result.views.some((view) => view.id === 'Debug Console')).toBe(false)
     expect(result.hiddenViews).toEqual(['Debug Console'])
     expect(mockRpc.invocations).toContainEqual([
       'Layout.createPanelViewlet',

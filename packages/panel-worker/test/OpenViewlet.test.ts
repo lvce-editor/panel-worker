@@ -3,6 +3,7 @@ import { RendererWorker } from '@lvce-editor/rpc-registry'
 import { createDefaultState } from '../src/parts/CreateDefaultState/CreateDefaultState.ts'
 import { openViewlet } from '../src/parts/OpenViewlet/OpenViewlet.ts'
 import * as PendingDisposals from '../src/parts/PendingDisposals/PendingDisposals.ts'
+import { createPanelViews } from '../test-utils/PanelViewTestHelpers.ts'
 
 test('openViewlet saves the active child before creating its replacement', async () => {
   using mockRpc = RendererWorker.registerMockRpc({
@@ -16,7 +17,7 @@ test('openViewlet saves the active child before creating its replacement', async
     childUid: 12,
     currentViewletId: 'Problems',
     height: 200,
-    views: ['Problems', 'Output'],
+    views: createPanelViews('Problems', 'Output'),
     width: 300,
   }
 
@@ -40,7 +41,7 @@ test('openViewlet does not dispose a missing active child', async () => {
   })
   const state = {
     ...createDefaultState(),
-    views: ['Problems'],
+    views: createPanelViews('Problems'),
   }
 
   await openViewlet(state, 'Problems')
@@ -57,7 +58,7 @@ test('openViewlet ignores views that are not available', async () => {
   const state = {
     ...createDefaultState(),
     currentViewletId: 'Problems',
-    views: ['Problems', 'Output'],
+    views: createPanelViews('Problems', 'Output'),
   }
 
   const result = await openViewlet(state, 'Ports')
@@ -68,7 +69,7 @@ test('openViewlet ignores views that are not available', async () => {
 
 test('creates a child in the panel application so it inherits extension services', async () => {
   using rpc = RendererWorker.registerMockRpc({ 'Application.execute': async () => {} })
-  const state = { ...createDefaultState(), applicationId: 'preview', views: ['Output'] }
+  const state = { ...createDefaultState(), applicationId: 'preview', views: createPanelViews('Output') }
   await openViewlet(state, 'Output')
   expect(rpc.invocations).toHaveLength(1)
   expect(rpc.invocations[0].slice(0, 4)).toEqual(['Application.execute', 'preview', 'Layout.createPanelViewlet', 'Output'])

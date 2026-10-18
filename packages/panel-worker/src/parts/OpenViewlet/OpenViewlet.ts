@@ -7,7 +7,7 @@ import * as SaveViewletState from '../SaveViewletState/SaveViewletState.ts'
 
 export const openViewlet = async (state: PanelState, id: string, focus = false, uri = ''): Promise<PanelState> => {
   const { applicationId, childUid: currentChildUid, currentViewletId, uid, views } = state
-  if (!views.includes(id)) {
+  if (views.every((view) => view.id !== id)) {
     return state
   }
   await SaveViewletState.saveViewletState(currentChildUid, currentViewletId)
@@ -15,7 +15,7 @@ export const openViewlet = async (state: PanelState, id: string, focus = false, 
   const childUid = GetUid.getUid()
   const tabId = GetUid.getUid()
   const actionsUid = GetUid.getUid()
-  const index = views.indexOf(id)
+  const index = views.findIndex((view) => view.id === id)
   await createViewlet(id, childUid, tabId, actionsUid, childDimensions, uri, focus, applicationId)
   if (currentChildUid > 0) {
     PendingDisposals.add(uid, currentChildUid)
