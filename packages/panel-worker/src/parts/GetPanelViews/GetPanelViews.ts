@@ -14,7 +14,7 @@ export const getPanelViews = (workspaceUri = '', platform = 0): readonly PanelVi
       type: 'builtin',
     }),
   )
-  if (platform === PlatformType.Web) {
+  if (platform === PlatformType.Web && !workspaceUri.startsWith('remote-server://')) {
     const index = views.findIndex((view) => view.id === ViewletModuleId.Terminals)
     views.splice(index, 1)
   }

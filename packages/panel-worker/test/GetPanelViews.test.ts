@@ -53,3 +53,9 @@ test('getPanelViews includes Ports for Codespaces workspaces', () => {
 test('getPanelViews marks builtin view descriptors', () => {
   expect(getPanelViews()[0]).toEqual({ id: ViewletModuleId.Problems, name: 'Problems', type: 'builtin' })
 })
+
+test('getPanelViews keeps terminals available for remote server browser workspaces', () => {
+  expect(getPanelViews('remote-server://host/workspace', PlatformType.Web)).toEqual(
+    createPanelViews(ViewletModuleId.Problems, ViewletModuleId.Output, ViewletModuleId.DebugConsole, ViewletModuleId.Terminals),
+  )
+})
